@@ -23,6 +23,15 @@ class ListActivity : AppCompatActivity() {
             Task("Task 1"),
             Task("Task 2"),
             Task("Task 3"),
+            Task("Task 1"),
+            Task("Task 2"),
+            Task("Task 3"),
+            Task("Task 1"),
+            Task("Task 2"),
+            Task("Task 3"),
+            Task("Task 1"),
+            Task("Task 2"),
+            Task("Task 3"),
             Task("Task 4")
         )
 
