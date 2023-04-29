@@ -20,6 +20,6 @@
         android:layout_height="wrap_content"
 
         android:text="Delete"
-        android:textSize="12sp" />
+        android:textSize="10sp" />
 
 </LinearLayout>
