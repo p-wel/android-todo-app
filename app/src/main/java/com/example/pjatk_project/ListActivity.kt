@@ -7,6 +7,7 @@ import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pjatk_project.databinding.ActivityListBinding
+import com.example.pjatk_project.databinding.ActivityMainBinding
 
 class ListActivity : AppCompatActivity() {
 
@@ -18,6 +19,8 @@ class ListActivity : AppCompatActivity() {
 
         val binding = ActivityListBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        setButtonsActions(binding)
 
         taskList = mutableListOf(
             Task("Task 1"),
@@ -35,6 +38,7 @@ class ListActivity : AppCompatActivity() {
             Task("Task 4")
         )
 
+
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         binding.recyclerView.adapter = TaskAdapter(taskList)
 
@@ -44,6 +48,11 @@ class ListActivity : AppCompatActivity() {
         context.startActivity(Intent(context, ListActivity::class.java))
     }
 
+    private fun setButtonsActions(binding: ActivityListBinding) {
+        binding.buttonBack.setOnClickListener {
+            this@ListActivity.finish()
+        }
+    }
 
 
 }

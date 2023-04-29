@@ -17,16 +17,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun start(context: Context) {
-        val intent = Intent(this, MainActivity::class.java)
-        context.startActivity(intent)
+        context.startActivity(Intent(this, MainActivity::class.java))
     }
 
     private fun setButtonsActions(binding: ActivityMainBinding) {
-        val list = ListActivity()
-
         binding.buttonStart.setOnClickListener {
-            list.start(this)
+            ListActivity().start(this)
         }
-
     }
 }
