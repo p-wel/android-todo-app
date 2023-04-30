@@ -52,6 +52,10 @@ class ListFragment : Fragment() {
             // dane activity implementuje interfejs Navigable (jeśli nie, to null).
             // Jeśli tak, to użyte zostaje navigate()
         }
+
+        binding.btSort.setOnClickListener {
+            adapter?.sort()
+        }
     }
 
     // oddzielny wątek na dostęp do bazy danych, żeby nie zajmować wątku głównego (UI)

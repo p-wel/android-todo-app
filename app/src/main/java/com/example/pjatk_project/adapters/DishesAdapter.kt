@@ -50,4 +50,11 @@ class DishesAdapter : RecyclerView.Adapter<DishViewHolder>() {
             notifyDataSetChanged()
         }
     }
+
+    fun sort() {
+        data.sortBy { it.name }
+        handler.post { // użycie handlera do notyfikacji o zmianie danych
+            notifyDataSetChanged()
+        }
+    }
 }
