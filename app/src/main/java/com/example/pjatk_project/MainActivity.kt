@@ -16,8 +16,14 @@ class MainActivity : AppCompatActivity() {
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // ustawienie właściwości wewnątrz aktywności
-        setButtonsActions(binding)
+        // dodanie ListFragment do fragment managera
+        val listFragment = ListFragment()
+        supportFragmentManager.beginTransaction()
+            .add(
+                R.id.container, listFragment,
+                listFragment.javaClass.name //tag, po którym będzie można łatwo znaleźć w fragmetManagerze
+            )
+            .commit() // wpięcie do managera
     }
 
     // uruchomienie aktyności
@@ -26,10 +32,4 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    // zdefiniowanie właściwości wewnątrz aktywności
-    private fun setButtonsActions(binding: ActivityMainBinding) {
-        binding.buttonStart.setOnClickListener {
-            ListActivity().start(this)
-        }
-    }
 }
