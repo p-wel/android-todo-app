@@ -16,7 +16,7 @@ import com.example.pjatk_project.databinding.FragmentListBinding
 class ListFragment : Fragment() {
 
     private lateinit var binding: FragmentListBinding
-    private lateinit var adapter: DishesAdapter
+    private var adapter: DishesAdapter? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,7 +31,7 @@ class ListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         adapter = DishesAdapter().apply { // użycie metod na adapterze
-            replace(DataSource.dishes) // użycie metody do dodania danych do adaptera
+            replace(DataSource.dishes) // użycie metody do dodania danych do adaptera (w widoku)
         }
 
         // podpięcie listy z danymi -> do widoku listy
@@ -43,7 +43,18 @@ class ListFragment : Fragment() {
 
         }
 
+        binding.btAdd.setOnClickListener {
+            (activity as? Navigable)?.navigate(Navigable.Destination.Add) // ? - sprawdzanie czy
+            // dane activity implementuje interfejs Navigable (jeśli nie, to null).
+            // Jeśli tak, to użyte zostaje navigate()
+        }
+    }
 
+    override fun onStart() {
+        super.onStart()
+        // ponowne użycie w onStart(), bo onViewCreated może się wykonać wcześniej,
+        // kiedy adapter nie został jeszcze zainicjalizowany
+        adapter?.replace(DataSource.dishes)
     }
 
 }

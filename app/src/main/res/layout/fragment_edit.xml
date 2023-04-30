@@ -1,14 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".EditFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+    <EditText
+        android:id="@+id/ingredients"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:gravity="start|top|left"
+        android:inputType="textMultiLine|textPersonName"
+        android:lines="4"
+        app:layout_constraintEnd_toEndOf="@+id/dishName"
+        app:layout_constraintStart_toStartOf="@+id/dishName"
+        app:layout_constraintTop_toBottomOf="@+id/dishName" />
 
-</FrameLayout>
+    <EditText
+        android:id="@+id/dishName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/dishNameLabel"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/dishNameLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="Nazwa"
+        app:layout_constraintBaseline_toBaselineOf="@+id/dishName"
+        app:layout_constraintEnd_toStartOf="@+id/dishName"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/ingredientsLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Składniki"
+        app:layout_constraintBaseline_toBaselineOf="@+id/ingredients"
+        app:layout_constraintStart_toStartOf="@+id/dishNameLabel" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/images"
+        android:layout_width="0dp"
+        android:layout_height="150dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ingredients"
+        tools:listitem="@layout/dish_image" />
+
+    <Button
+        android:id="@+id/save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="Save"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/images" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

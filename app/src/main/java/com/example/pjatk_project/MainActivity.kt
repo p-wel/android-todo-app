@@ -6,18 +6,19 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.pjatk_project.databinding.ActivityMainBinding
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), Navigable {
+
+    private lateinit var listFragment: ListFragment
 
     // stworzenie aktywności
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         // view binding
-        val binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        setContentView(ActivityMainBinding.inflate(layoutInflater).root)
 
         // dodanie ListFragment do fragment managera
-        val listFragment = ListFragment()
+        listFragment = ListFragment()
         supportFragmentManager.beginTransaction()
             .add(
                 R.id.container, listFragment,
@@ -26,9 +27,24 @@ class MainActivity : AppCompatActivity() {
             .commit() // wpięcie do managera
     }
 
-    // uruchomienie aktyności
-    fun start(context: Context) {
-        context.startActivity(Intent(this, MainActivity::class.java))
+    override fun navigate(to: Navigable.Destination) {
+        supportFragmentManager.beginTransaction().apply {
+            when (to) {
+                Navigable.Destination.List -> replace(
+                    R.id.container,
+                    listFragment,
+                    listFragment.javaClass.name
+                )
+                Navigable.Destination.Add -> {
+                    replace(
+                        R.id.container,
+                        EditFragment(),
+                        EditFragment::class.java.name
+                    )
+                    addToBackStack(EditFragment::class.java.name) // funkcja back
+                }
+            }
+        }.commit()
     }
 
 
