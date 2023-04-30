@@ -5,6 +5,7 @@ import android.os.Looper
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.os.HandlerCompat
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pjatk_project.databinding.ListItemBinding
 import com.example.pjatk_project.model.Dish
@@ -44,17 +45,23 @@ class DishesAdapter : RecyclerView.Adapter<DishViewHolder>() {
 
     // własna metoda podmieniająca listę i powiadamiająca widok o tej zmianie
     fun replace(newData: List<Dish>) {
+        val callback = DishCallback(data, newData)
         data.clear()
         data.addAll(newData)
+        val result = DiffUtil.calculateDiff(callback) // sprawdzenie, czy itemy są takie same
         handler.post { // użycie handlera do notyfikacji o zmianie danych
-            notifyDataSetChanged()
+            result.dispatchUpdatesTo(this) // aktualizacja danych na this adapterze
         }
+
     }
 
     fun sort() {
+        val notSorted = data.toList()
+        val callback = DishCallback(notSorted, data)
         data.sortBy { it.name }
+        val result = DiffUtil.calculateDiff(callback) // sprawdzenie, czy itemy są takie same
         handler.post { // użycie handlera do notyfikacji o zmianie danych
-            notifyDataSetChanged()
+            result.dispatchUpdatesTo(this) // aktualizacja danych na this adapterze
         }
     }
 }
