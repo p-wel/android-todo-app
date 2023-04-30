@@ -6,11 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.pjatk_project.data.DataSource
-import com.example.pjatk_project.model.Dish
 import com.example.pjatk_project.Navigable
 import com.example.pjatk_project.adapters.DishImagesAdapter
+import com.example.pjatk_project.data.DishDatabase
+import com.example.pjatk_project.data.model.DishEntity
 import com.example.pjatk_project.databinding.FragmentEditBinding
+import kotlin.concurrent.thread
 
 /**
  * A simple [Fragment] subclass.
@@ -45,13 +46,17 @@ class EditFragment : Fragment() {
         }
 
         binding.save.setOnClickListener {
-            val newDish = Dish(
-                binding.dishName.text.toString(),
-                binding.ingredients.text.toString().split("\n"),
-                adapter.selectedIdRes
+            val newDish = DishEntity(
+                name = binding.dishName.text.toString(),
+                ingredients = binding.ingredients.text.toString(),
+                icon = resources.getResourceEntryName(adapter.selectedIdRes) // pobranie ikony z aktualnego elementu
             )
-            DataSource.dishes.add(newDish)
-            (activity as? Navigable)?.navigate(Navigable.Destination.List)
+
+            // osobny wątek na dostęp do bazy i dodanie nowego obiektu
+            thread {
+                DishDatabase.open(requireContext()).dishes.addDish(newDish) // dodanie nowego Dish do bazy
+                (activity as? Navigable)?.navigate(Navigable.Destination.List)
+            }
         }
     }
 

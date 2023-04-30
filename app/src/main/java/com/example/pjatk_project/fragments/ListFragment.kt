@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.pjatk_project.data.DataSource
 import com.example.pjatk_project.DishesAdapter
 import com.example.pjatk_project.Navigable
 import com.example.pjatk_project.data.DishDatabase
@@ -70,15 +69,13 @@ class ListFragment : Fragment() {
                 )
             )
         }
+        // nie w nowym wątku, bo handler obsługuje to działanie async
         adapter?.replace(dishes) // dodanie danych pobranych z bazy danych do adaptera
     }
 
 
     override fun onStart() {
         super.onStart()
-        // ponowne użycie w onStart(), bo onViewCreated może się wykonać wcześniej,
-        // kiedy adapter nie został jeszcze zainicjalizowany
-        adapter?.replace(DataSource.dishes)
         loadData() //podwójne wywołanie loadData() - tu i w onViewCreated()
     }
 

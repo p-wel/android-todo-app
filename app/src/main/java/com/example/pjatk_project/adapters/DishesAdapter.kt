@@ -1,7 +1,10 @@
 package com.example.pjatk_project
 
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.os.HandlerCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pjatk_project.databinding.ListItemBinding
 import com.example.pjatk_project.model.Dish
@@ -19,6 +22,9 @@ class DishViewHolder(val binding: ListItemBinding) : RecyclerView.ViewHolder(bin
 // adapter łączący widok z danymi
 class DishesAdapter : RecyclerView.Adapter<DishViewHolder>() {
     private val data = mutableListOf<Dish>()
+
+    // handler usprawniający pracę między wątkami (wątek danych / wątek UI)
+    private val handler: Handler = HandlerCompat.createAsync(Looper.getMainLooper())
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DishViewHolder {
         val binding = ListItemBinding.inflate(
             LayoutInflater.from(parent.context),
@@ -40,6 +46,8 @@ class DishesAdapter : RecyclerView.Adapter<DishViewHolder>() {
     fun replace(newData: List<Dish>) {
         data.clear()
         data.addAll(newData)
-        notifyDataSetChanged()
+        handler.post { // użycie handlera do notyfikacji o zmianie danych
+            notifyDataSetChanged()
+        }
     }
 }
