@@ -9,7 +9,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.pjatk_project.data.DataSource
 import com.example.pjatk_project.DishesAdapter
 import com.example.pjatk_project.Navigable
+import com.example.pjatk_project.data.DishDatabase
 import com.example.pjatk_project.databinding.FragmentListBinding
+import com.example.pjatk_project.model.Dish
+import kotlin.concurrent.thread
 
 /**
  * A simple [Fragment] subclass.
@@ -33,9 +36,9 @@ class ListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        adapter = DishesAdapter().apply { // użycie metod na adapterze
-            replace(DataSource.dishes) // użycie metody do dodania danych do adaptera (w widoku)
-        }
+        adapter = DishesAdapter()
+        loadData()
+
 
         // podpięcie listy z danymi -> do widoku listy
         binding.list.let {
@@ -43,7 +46,6 @@ class ListFragment : Fragment() {
             it.layoutManager =
                 LinearLayoutManager(requireContext()) // ustalenie layoutu dla dodawania elementów
             // requireContext() zwraca kontekst dla tego fragmentu (sam fragment nie posiada kontekstu)
-
         }
 
         binding.btAdd.setOnClickListener {
@@ -53,11 +55,31 @@ class ListFragment : Fragment() {
         }
     }
 
+    // oddzielny wątek na dostęp do bazy danych, żeby nie zajmować wątku głównego (UI)
+    fun loadData() = thread {
+        val dishes = DishDatabase.open(
+            requireContext() //requireContext() - żeby sięgnąć po kontekst aktywności, a nie fragmentu
+        ).dishes.getAll().map { entity -> // mapowanie encji na obiekt Dish
+            Dish(
+                entity.name,
+                entity.ingredients.split("\n"),
+                resources.getIdentifier( // pobranie identyfikatora zasobu
+                    entity.icon,
+                    "drawable",
+                    requireContext().packageName
+                )
+            )
+        }
+        adapter?.replace(dishes) // dodanie danych pobranych z bazy danych do adaptera
+    }
+
+
     override fun onStart() {
         super.onStart()
         // ponowne użycie w onStart(), bo onViewCreated może się wykonać wcześniej,
         // kiedy adapter nie został jeszcze zainicjalizowany
         adapter?.replace(DataSource.dishes)
+        loadData() //podwójne wywołanie loadData() - tu i w onViewCreated()
     }
 
 }
