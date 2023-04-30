@@ -1,4 +1,4 @@
-package com.example.pjatk_project
+package com.example.pjatk_project.model
 
 import androidx.annotation.DrawableRes
 

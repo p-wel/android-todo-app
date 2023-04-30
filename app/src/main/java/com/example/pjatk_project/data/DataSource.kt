@@ -1,4 +1,7 @@
-package com.example.pjatk_project
+package com.example.pjatk_project.data
+
+import com.example.pjatk_project.model.Dish
+import com.example.pjatk_project.R
 
 // obiekt (pojedyncza instancja) na dane
 object DataSource {

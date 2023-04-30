@@ -1,4 +1,4 @@
-package com.example.pjatk_project
+package com.example.pjatk_project.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -6,6 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.pjatk_project.data.DataSource
+import com.example.pjatk_project.model.Dish
+import com.example.pjatk_project.Navigable
+import com.example.pjatk_project.adapters.DishImagesAdapter
 import com.example.pjatk_project.databinding.FragmentEditBinding
 
 /**

@@ -1,10 +1,10 @@
 package com.example.pjatk_project
 
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.pjatk_project.databinding.ActivityMainBinding
+import com.example.pjatk_project.fragments.EditFragment
+import com.example.pjatk_project.fragments.ListFragment
 
 class MainActivity : AppCompatActivity(), Navigable {
 

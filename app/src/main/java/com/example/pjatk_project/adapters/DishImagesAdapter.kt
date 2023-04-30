@@ -1,9 +1,10 @@
-package com.example.pjatk_project
+package com.example.pjatk_project.adapters
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.pjatk_project.R
 import com.example.pjatk_project.databinding.DishImageBinding
 
 // holder na obrazki

@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pjatk_project.databinding.ListItemBinding
+import com.example.pjatk_project.model.Dish
 
 // holder na dane
 class DishViewHolder(val binding: ListItemBinding) : RecyclerView.ViewHolder(binding.root) {
