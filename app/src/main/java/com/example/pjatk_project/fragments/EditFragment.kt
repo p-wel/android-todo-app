@@ -53,7 +53,21 @@ class EditFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // wypisanie danych aktualnego elementu w formularzu edycji (lub brak, jeśli używa się dodawania)
+        binding.dishName.setText(dish?.name ?: "")
+        binding.ingredients.setText(dish?.ingredients ?: "")
+        binding.ingredients.setText(dish?.ingredients ?: "")
+
+        // stworzenie adaptera dla image i ustawienie selecta na odpowiedniej ikonie [edycja]
         adapter = DishImagesAdapter()
+        adapter.setSelection(dish?.icon.let {
+            resources.getIdentifier(
+                it,
+                "drawable",
+                requireContext().packageName
+            )
+        }
+        ) //let{} żeby nie przekazać tu przypadkiem nulla
 
         binding.images.apply { // użycie metod na RecyclerView images
             // wewnątrz apply{}
@@ -63,10 +77,10 @@ class EditFragment : Fragment() {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         }
 
-        // save wykonujący zapis/dodawanie elementów
+        // save wykonujący edycję/dodawanie elementów
         binding.save.setOnClickListener {
             val dish = dish?.copy( // jeśli istnieje dish, to stwórz jego kopię
-                // [zapis]
+                // [edycja]
                 name = binding.dishName.text.toString(),
                 ingredients = binding.ingredients.text.toString(),
                 icon = resources.getResourceEntryName(adapter.selectedIdRes) // pobranie ikony z aktualnego elementu
@@ -76,7 +90,8 @@ class EditFragment : Fragment() {
                 ingredients = binding.ingredients.text.toString(),
                 icon = resources.getResourceEntryName(adapter.selectedIdRes) // pobranie ikony z aktualnego elementu
             )
-            this.dish = dish // dla pewności, przypisanie zaktualizowanego elementu (do ew. późniejszego użytku)
+            this.dish =
+                dish // dla pewności, przypisanie zaktualizowanego elementu (do ew. późniejszego użytku)
 
             // osobny wątek na dodanie nowego obiektu
             thread {

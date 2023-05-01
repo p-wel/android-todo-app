@@ -35,13 +35,18 @@ class DishImagesAdapter : RecyclerView.Adapter<DishImageViewHolder>() {
             parent,
             false // żeby ListView nie przypiął się do samej listy
         )
-        return DishImageViewHolder(binding).also { vh ->  // also{} to lambda wykonująca się przed returnem, vh - viewHolder
+        return DishImageViewHolder(binding).also { vh ->  // also{} to lambda wykonująca się przed returnem, vh to viewHolder
             binding.root.setOnClickListener {
-                notifyItemChanged(selectedPosition) // powiadomienie, że poprzednia pozycja się zmieniła
-                selectedPosition = vh.layoutPosition // ustawienie selecta na aktualną pozycję
-                notifyItemChanged(selectedPosition) // powiadomienie, że aktualna pozycja się zmieniła
+                setSelected(vh.layoutPosition) // ustawienie selecta na aktualną pozycję w layoucie
             }
         }
+    }
+
+    // ustawienie selecta na obrazek
+    private fun setSelected(layoutPosition: Int) {
+        notifyItemChanged(selectedPosition) // powiadomienie, że poprzednia pozycja się zmieniła
+        selectedPosition = layoutPosition // ustawienie selecta na aktualną pozycję
+        notifyItemChanged(selectedPosition) // powiadomienie, że aktualna pozycja się zmieniła
     }
 
     // podpinanie ViewHoldera na odpowiednią pozycję
@@ -51,4 +56,11 @@ class DishImagesAdapter : RecyclerView.Adapter<DishImageViewHolder>() {
 
     // określenie ilości elementów w RecyclerView
     override fun getItemCount(): Int = images.size
+
+    // wyszukanie indeksu obrazka i ustawienie go za pomocą setSelected()
+    fun setSelection(icon: Int?) {
+        val index = images.indexOfFirst { it == icon }
+        if (index == -1) return // jeśli nie znajdzie, to nie ustawiaj selecta
+        setSelected(index)
+    }
 }
