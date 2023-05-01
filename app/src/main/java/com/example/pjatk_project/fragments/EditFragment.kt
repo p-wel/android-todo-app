@@ -13,7 +13,7 @@ import com.example.pjatk_project.data.model.DishEntity
 import com.example.pjatk_project.databinding.FragmentEditBinding
 import kotlin.concurrent.thread
 
-private const val ARG_EDIT_ID = "edit_id"
+const val ARG_EDIT_ID = "edit_id"
 
 /**
  * A simple [Fragment] subclass.
