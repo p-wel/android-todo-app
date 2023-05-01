@@ -51,7 +51,7 @@ class DishesAdapter : RecyclerView.Adapter<DishViewHolder>() {
 
     // własna metoda podmieniająca listę i powiadamiająca widok o tej zmianie
     fun replace(newData: List<Dish>) {
-        val callback = DishCallback(data, newData)
+        val callback = DishCallback(data.toList(), newData)
         data.clear()
         data.addAll(newData)
         val result = DiffUtil.calculateDiff(callback) // sprawdzenie, czy itemy są takie same
@@ -65,5 +65,11 @@ class DishesAdapter : RecyclerView.Adapter<DishViewHolder>() {
         data.sortBy { it.name }
         val result = DiffUtil.calculateDiff(callback) // sprawdzenie, czy itemy są takie same
         result.dispatchUpdatesTo(this) // aktualizacja danych na this adapterze
+    }
+
+    fun removeItem(layoutPosition: Int): Dish {
+        val dish = data.removeAt(layoutPosition)
+        notifyItemRemoved(layoutPosition)
+        return dish
     }
 }

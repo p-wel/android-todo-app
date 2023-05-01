@@ -5,9 +5,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.pjatk_project.DishesAdapter
 import com.example.pjatk_project.Navigable
+import com.example.pjatk_project.adapters.SwipeToRemove
 import com.example.pjatk_project.data.DishDatabase
 import com.example.pjatk_project.databinding.FragmentListBinding
 import com.example.pjatk_project.model.Dish
@@ -22,6 +24,14 @@ class ListFragment : Fragment() {
 
     private lateinit var binding: FragmentListBinding
     private var adapter: DishesAdapter? = null
+    private lateinit var db: DishDatabase
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        //requireContext() - żeby sięgnąć po kontekst aktywności, a nie kontekst fragmentu
+        db = DishDatabase.open(requireContext())
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,13 +54,25 @@ class ListFragment : Fragment() {
 
         loadData()
 
-
         // podpięcie listy z danymi -> do widoku listy
         binding.list.let {
+            // it. oznacza tu indeks elementu na liście
             it.adapter = adapter // podpięcie adaptera do ListFragment
             it.layoutManager =
                 LinearLayoutManager(requireContext()) // ustalenie layoutu dla dodawania elementów
-            // requireContext() zwraca kontekst dla tego fragmentu (sam fragment nie posiada kontekstu)
+
+            // podpięcie touchHelpera
+            ItemTouchHelper(
+                SwipeToRemove {
+                    // sprawdzenie, czy istnieje item do usunięcia
+                    adapter?.removeItem(it)?.let {
+                        // oddzielny wątek na usunięcie z bazy
+                        thread {
+                            db.dishes.remove(it.id) // usunięcie z bazy
+                        }
+                    }
+                }
+            ).attachToRecyclerView(it)
         }
 
         binding.btAdd.setOnClickListener {
@@ -67,9 +89,7 @@ class ListFragment : Fragment() {
 
     // oddzielny wątek na dostęp do bazy danych, żeby nie zajmować wątku głównego (UI)
     fun loadData() = thread {
-        val dishes = DishDatabase.open(
-            requireContext() //requireContext() - żeby sięgnąć po kontekst aktywności, a nie fragmentu
-        ).dishes.getAll().map { entity -> // mapowanie encji na obiekt Dish
+        val dishes = db.dishes.getAll().map { entity -> // mapowanie encji na obiekt Dish
             Dish(
                 entity.id,
                 entity.name,
@@ -87,10 +107,14 @@ class ListFragment : Fragment() {
         }
     }
 
-
     override fun onStart() {
         super.onStart()
         loadData() //podwójne wywołanie loadData() - tu i w onViewCreated()
     }
 
+    // zamknięcie dostępu do bazy
+    override fun onDestroy() {
+        db.close()
+        super.onDestroy()
+    }
 }

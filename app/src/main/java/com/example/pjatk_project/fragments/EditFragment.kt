@@ -104,10 +104,16 @@ class EditFragment : Fragment() {
             // osobny wątek na dodanie nowego obiektu
             thread {
                 db.dishes.addDish(dish) // dodanie nowego Dish do bazy
-//                (activity as? Navigable)?.navigate(Navigable.Destination.List)
+                //TODO - usunąć?    (activity as? Navigable)?.navigate(Navigable.Destination.List)
                 parentFragmentManager.popBackStack()
             }
         }
+    }
+
+    // zamknięcie dostępu do bazy
+    override fun onDestroy() {
+        db.close()
+        super.onDestroy()
     }
 
 

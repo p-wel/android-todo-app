@@ -19,4 +19,9 @@ interface DishDao {
 
     @Update
     fun updateDish(newDish: DishEntity)
+
+    // Query, bo usunięcie jest wg id Disha, a nie bezpośrednio na encji
+    @Query("DELETE FROM dish WHERE id = :id;")
+    fun remove(id: Long)
+
 }
