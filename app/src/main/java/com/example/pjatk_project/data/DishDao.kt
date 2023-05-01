@@ -12,6 +12,9 @@ interface DishDao {
     @Query("SELECT * FROM dish;")
     fun getAll(): List<DishEntity>
 
+    @Query("SELECT * FROM dish WHERE id = :id;")
+    fun getDish(id: Long): DishEntity
+
     @Insert
     fun addDish(newDish: DishEntity)
 

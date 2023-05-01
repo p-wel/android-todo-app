@@ -9,5 +9,5 @@ data class DishEntity(
     val id: Long = 0,
     val name: String,
     val ingredients: String,
-    val icon: String //iconId mogłoby się zmienić w trakcie kompilacji, więc użyam nazwy icon
+    val icon: String // iconId mogłoby się zmienić w trakcie kompilacji, więc używam nazwy icon
 )

@@ -13,6 +13,8 @@ import com.example.pjatk_project.data.model.DishEntity
 import com.example.pjatk_project.databinding.FragmentEditBinding
 import kotlin.concurrent.thread
 
+private const val ARG_EDIT_ID = "edit_id"
+
 /**
  * A simple [Fragment] subclass.
  * Use the [EditFragment.newInstance] factory method to
@@ -22,6 +24,22 @@ class EditFragment : Fragment() {
 
     private lateinit var binding: FragmentEditBinding
     private lateinit var adapter: DishImagesAdapter
+    private lateinit var db: DishDatabase
+    private var dish: DishEntity? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val id = requireArguments().getLong(
+            ARG_EDIT_ID, // przypisanie odpowiedniego id DishEntity do edycji
+            -1 // default -1, jeśli nie uda się pobrać
+        )
+
+        // dostęp do bazy
+        db = DishDatabase.open(requireContext())
+        if (id != -1L) {
+            dish = db.dishes.getDish(id) // pobranie z bazy danych po id
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,16 +63,24 @@ class EditFragment : Fragment() {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         }
 
+        // save wykonujący zapis/dodawanie elementów
         binding.save.setOnClickListener {
-            val newDish = DishEntity(
+            val dish = dish?.copy( // jeśli istnieje dish, to stwórz jego kopię
+                // [zapis]
+                name = binding.dishName.text.toString(),
+                ingredients = binding.ingredients.text.toString(),
+                icon = resources.getResourceEntryName(adapter.selectedIdRes) // pobranie ikony z aktualnego elementu
+            ) ?: DishEntity( // jeśli nie istnieje dish, to dodaj nowy obiekt
+                // [dodawanie]
                 name = binding.dishName.text.toString(),
                 ingredients = binding.ingredients.text.toString(),
                 icon = resources.getResourceEntryName(adapter.selectedIdRes) // pobranie ikony z aktualnego elementu
             )
+            this.dish = dish // dla pewności, przypisanie zaktualizowanego elementu (do ew. późniejszego użytku)
 
-            // osobny wątek na dostęp do bazy i dodanie nowego obiektu
+            // osobny wątek na dodanie nowego obiektu
             thread {
-                DishDatabase.open(requireContext()).dishes.addDish(newDish) // dodanie nowego Dish do bazy
+                db.dishes.addDish(dish) // dodanie nowego Dish do bazy
                 (activity as? Navigable)?.navigate(Navigable.Destination.List)
             }
         }
