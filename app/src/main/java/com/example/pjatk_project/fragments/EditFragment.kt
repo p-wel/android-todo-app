@@ -6,14 +6,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.pjatk_project.Navigable
 import com.example.pjatk_project.adapters.DishImagesAdapter
 import com.example.pjatk_project.data.DishDatabase
 import com.example.pjatk_project.data.model.DishEntity
 import com.example.pjatk_project.databinding.FragmentEditBinding
 import kotlin.concurrent.thread
 
+// id tego fragmentu (przydatne przy przekazywaniu argumentów podczas nawigacji)
 const val ARG_EDIT_ID = "edit_id"
+const val ARG_ADD_ID = "add_id"
 
 /**
  * A simple [Fragment] subclass.
@@ -63,7 +64,6 @@ class EditFragment : Fragment() {
                 requireActivity().runOnUiThread {
                     // wypisanie danych aktualnego elementu w formularzu edycji (lub brak, jeśli używa się dodawania)
                     binding.dishName.setText(dish?.name ?: "")
-                    binding.ingredients.setText(dish?.ingredients ?: "")
                     binding.ingredients.setText(dish?.ingredients ?: "")
 
                     // ustawienie selecta na odpowiedniej ikonie [edycja]

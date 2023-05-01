@@ -1,10 +1,7 @@
 package com.example.pjatk_project
 
-import android.os.Handler
-import android.os.Looper
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.os.HandlerCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pjatk_project.databinding.ListItemBinding
