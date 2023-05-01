@@ -1,9 +1,6 @@
 package com.example.pjatk_project.data
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.Query
-import androidx.room.Update
+import androidx.room.*
 import com.example.pjatk_project.data.model.DishEntity
 
 // interfejs dla dostępu do danych i ich edycji
@@ -15,7 +12,9 @@ interface DishDao {
     @Query("SELECT * FROM dish WHERE id = :id;")
     fun getDish(id: Long): DishEntity
 
-    @Insert
+    // ustawienie OnConflictStrategy
+    // taki konflikt powstanie, bo używamy tego samego formularza do Insert/Update [edycja/dodawanie]
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun addDish(newDish: DishEntity)
 
     @Update

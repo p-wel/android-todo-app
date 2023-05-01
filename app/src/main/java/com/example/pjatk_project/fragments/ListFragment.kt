@@ -35,7 +35,13 @@ class ListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        adapter = DishesAdapter()
+        adapter = DishesAdapter().apply {
+            // podpięcie onItemClick od razu przy tworzeniu adaptera
+            onItemClick = {
+                (activity as? Navigable)?.navigate(Navigable.Destination.Edit, it)
+            }
+        }
+
         loadData()
 
 
@@ -48,9 +54,10 @@ class ListFragment : Fragment() {
         }
 
         binding.btAdd.setOnClickListener {
-            (activity as? Navigable)?.navigate(Navigable.Destination.Add) // ? - sprawdzanie czy
-            // dane activity implementuje interfejs Navigable (jeśli nie, to null).
-            // Jeśli tak, to użyte zostaje navigate()
+            // "?" to sprawdzanie czy dane activity implementuje interfejs Navigable:
+            //      jeśli tak, to użyte zostaje navigate()
+            //      jeśli nie, to null
+            (activity as? Navigable)?.navigate(Navigable.Destination.Add)
         }
 
         binding.btSort.setOnClickListener {
@@ -64,6 +71,7 @@ class ListFragment : Fragment() {
             requireContext() //requireContext() - żeby sięgnąć po kontekst aktywności, a nie fragmentu
         ).dishes.getAll().map { entity -> // mapowanie encji na obiekt Dish
             Dish(
+                entity.id,
                 entity.name,
                 entity.ingredients.split("\n"),
                 resources.getIdentifier( // pobranie identyfikatora zasobu
@@ -73,8 +81,10 @@ class ListFragment : Fragment() {
                 )
             )
         }
-        // nie w nowym wątku, bo handler obsługuje to działanie async
-        adapter?.replace(dishes) // dodanie danych pobranych z bazy danych do adaptera
+        // w wątku głównym UI
+        requireActivity().runOnUiThread {
+            adapter?.replace(dishes) // dodanie danych pobranych z bazy danych do adaptera
+        }
     }
 
 

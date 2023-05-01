@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity(), Navigable {
                         EditFragment(),
                         EditFragment::class.java.name
                     )
-                    addToBackStack(EditFragment::class.java.name) // funkcja back
+                    addToBackStack(EditFragment::class.java.name) // funkcja back, dodanie do stacku
                 }
                 Navigable.Destination.Edit -> {
                     replace(
@@ -60,7 +60,7 @@ class MainActivity : AppCompatActivity(), Navigable {
                         },
                         EditFragment::class.java.name
                     )
-                    addToBackStack(EditFragment::class.java.name) // funkcja back
+                    addToBackStack(EditFragment::class.java.name) // funkcja back, dodanie do stacku
                 }
             }
         }.commit()

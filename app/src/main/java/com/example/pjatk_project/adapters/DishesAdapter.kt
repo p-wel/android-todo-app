@@ -24,15 +24,21 @@ class DishViewHolder(val binding: ListItemBinding) : RecyclerView.ViewHolder(bin
 class DishesAdapter : RecyclerView.Adapter<DishViewHolder>() {
     private val data = mutableListOf<Dish>()
 
-    // handler usprawniający pracę między wątkami (wątek danych / wątek UI)
-    private val handler: Handler = HandlerCompat.createAsync(Looper.getMainLooper())
+    var onItemClick: (Long) -> Unit =
+        { } // zmienna przyjmująca Long. Jeśli jest pusty, to nic nie robi
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DishViewHolder {
         val binding = ListItemBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
             false // żeby ListView nie przypiął się do samej listy
         )
-        return DishViewHolder(binding)
+        return DishViewHolder(binding).also { vh ->
+            // na ViewHolder podpięcie onItemClick z podaniem odpowiedniego id
+            binding.root.setOnClickListener {
+                onItemClick(data[vh.layoutPosition].id)
+            }
+        }
     }
 
     // podpinanie ViewHoldera na odpowiednią pozycję
@@ -49,9 +55,7 @@ class DishesAdapter : RecyclerView.Adapter<DishViewHolder>() {
         data.clear()
         data.addAll(newData)
         val result = DiffUtil.calculateDiff(callback) // sprawdzenie, czy itemy są takie same
-        handler.post { // użycie handlera do notyfikacji o zmianie danych
-            result.dispatchUpdatesTo(this) // aktualizacja danych na this adapterze
-        }
+        result.dispatchUpdatesTo(this) // aktualizacja danych na this adapterze
 
     }
 
@@ -60,8 +64,6 @@ class DishesAdapter : RecyclerView.Adapter<DishViewHolder>() {
         val callback = DishCallback(notSorted, data)
         data.sortBy { it.name }
         val result = DiffUtil.calculateDiff(callback) // sprawdzenie, czy itemy są takie same
-        handler.post { // użycie handlera do notyfikacji o zmianie danych
-            result.dispatchUpdatesTo(this) // aktualizacja danych na this adapterze
-        }
+        result.dispatchUpdatesTo(this) // aktualizacja danych na this adapterze
     }
 }

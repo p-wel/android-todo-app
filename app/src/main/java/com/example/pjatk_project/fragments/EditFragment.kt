@@ -29,16 +29,9 @@ class EditFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val id = requireArguments().getLong(
-            ARG_EDIT_ID, // przypisanie odpowiedniego id DishEntity do edycji
-            -1 // default -1, jeśli nie uda się pobrać
-        )
 
         // dostęp do bazy
         db = DishDatabase.open(requireContext())
-        if (id != -1L) {
-            dish = db.dishes.getDish(id) // pobranie z bazy danych po id
-        }
     }
 
     override fun onCreateView(
@@ -53,24 +46,39 @@ class EditFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // wypisanie danych aktualnego elementu w formularzu edycji (lub brak, jeśli używa się dodawania)
-        binding.dishName.setText(dish?.name ?: "")
-        binding.ingredients.setText(dish?.ingredients ?: "")
-        binding.ingredients.setText(dish?.ingredients ?: "")
-
-        // stworzenie adaptera dla image i ustawienie selecta na odpowiedniej ikonie [edycja]
         adapter = DishImagesAdapter()
-        adapter.setSelection(dish?.icon.let {
-            resources.getIdentifier(
-                it,
-                "drawable",
-                requireContext().packageName
-            )
-        }
-        ) //let{} żeby nie przekazać tu przypadkiem nulla
 
-        binding.images.apply { // użycie metod na RecyclerView images
-            // wewnątrz apply{}
+        // pobranie id widoku
+        val id = requireArguments().getLong(
+            ARG_EDIT_ID, // [edycja]
+            -1 // [dodawanie]
+        )
+
+        if (id != -1L) {
+            // [edycja]
+            thread { //dostęp do bazy w oddzielnym wątku (nie można blokować głównego wątku UI!)
+                dish = db.dishes.getDish(id) // pobranie odpowiedniej encji z bazy
+
+                // przypisanie danych w innym wątku - na głównym wątku UI
+                requireActivity().runOnUiThread {
+                    // wypisanie danych aktualnego elementu w formularzu edycji (lub brak, jeśli używa się dodawania)
+                    binding.dishName.setText(dish?.name ?: "")
+                    binding.ingredients.setText(dish?.ingredients ?: "")
+                    binding.ingredients.setText(dish?.ingredients ?: "")
+
+                    // ustawienie selecta na odpowiedniej ikonie [edycja]
+                    adapter.setSelection(
+                        dish?.icon.let { //let{} żeby nie przekazać tu przypadkiem nulla
+                            resources.getIdentifier(it, "drawable", requireContext().packageName)
+                        }
+                    )
+                }
+            }
+        }
+
+        // użycie metod na RecyclerView images
+        binding.images.apply {
+            // wewnątrz "apply{}":
             //      - this jest obiektem RecyclerView
             //      - this@EditFragment jest obiektem, którego adapter ma zostać przypisany
             adapter = this@EditFragment.adapter
@@ -96,7 +104,8 @@ class EditFragment : Fragment() {
             // osobny wątek na dodanie nowego obiektu
             thread {
                 db.dishes.addDish(dish) // dodanie nowego Dish do bazy
-                (activity as? Navigable)?.navigate(Navigable.Destination.List)
+//                (activity as? Navigable)?.navigate(Navigable.Destination.List)
+                parentFragmentManager.popBackStack()
             }
         }
     }
