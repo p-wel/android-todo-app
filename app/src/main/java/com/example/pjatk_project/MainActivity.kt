@@ -3,6 +3,7 @@ package com.example.pjatk_project
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.pjatk_project.databinding.ActivityMainBinding
+import com.example.pjatk_project.fragments.ARG_ADD_ID
 import com.example.pjatk_project.fragments.ARG_EDIT_ID
 import com.example.pjatk_project.fragments.EditFragment
 import com.example.pjatk_project.fragments.ListFragment
@@ -42,7 +43,13 @@ class MainActivity : AppCompatActivity(), Navigable {
                 Navigable.Destination.Add -> {
                     replace(
                         R.id.container,
-                        EditFragment(),
+                        EditFragment::class.java,
+                        Bundle().apply {// podanie argumentów klasy
+                            putLong(
+                                ARG_ADD_ID, // id dodawania
+                                id ?: -1L // jeśli nie ma id, to ustaw na -1
+                            )
+                        },
                         EditFragment::class.java.name
                     )
                     addToBackStack(EditFragment::class.java.name) // funkcja back, dodanie do stacku
@@ -50,21 +57,18 @@ class MainActivity : AppCompatActivity(), Navigable {
                 Navigable.Destination.Edit -> {
                     replace(
                         R.id.container,
-                        EditFragment::class.java, // podanie klasy
+                        EditFragment::class.java,
                         Bundle().apply {// podanie argumentów klasy
                             putLong(
                                 ARG_EDIT_ID, // id edycji
                                 id ?: -1L // jeśli nie ma id, to ustaw na -1
-                                // (-1 to również oznacza, że jest się w Add, a nie w Edit, więc jest doublecheck)
                             )
                         },
-                        EditFragment::class.java.name
+                        EditFragment::class.java.name // nadanie tag name dla ułatwienia
                     )
                     addToBackStack(EditFragment::class.java.name) // funkcja back, dodanie do stacku
                 }
             }
         }.commit()
     }
-
-
 }
