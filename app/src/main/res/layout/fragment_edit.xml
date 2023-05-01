@@ -7,20 +7,20 @@
     tools:context=".fragments.EditFragment">
 
     <EditText
-        android:id="@+id/ingredients"
+        android:id="@+id/description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:ems="10"
         android:gravity="start|top|left"
         android:inputType="textMultiLine|textPersonName"
-        android:lines="4"
-        app:layout_constraintEnd_toEndOf="@+id/dishName"
-        app:layout_constraintStart_toStartOf="@+id/dishName"
-        app:layout_constraintTop_toBottomOf="@+id/dishName" />
+        android:lines="8"
+        app:layout_constraintEnd_toEndOf="@+id/taskName"
+        app:layout_constraintStart_toStartOf="@+id/taskName"
+        app:layout_constraintTop_toBottomOf="@+id/taskName" />
 
     <EditText
-        android:id="@+id/dishName"
+        android:id="@+id/taskName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -29,45 +29,49 @@
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/dishNameLabel"
+        app:layout_constraintStart_toEndOf="@+id/taskNameLabel"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/dishNameLabel"
+        android:id="@+id/taskNameLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:text="Nazwa"
-        app:layout_constraintBaseline_toBaselineOf="@+id/dishName"
-        app:layout_constraintEnd_toStartOf="@+id/dishName"
+        app:layout_constraintBaseline_toBaselineOf="@+id/taskName"
+        app:layout_constraintEnd_toStartOf="@+id/taskName"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/ingredientsLabel"
+        android:id="@+id/descriptionLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Składniki"
-        app:layout_constraintBaseline_toBaselineOf="@+id/ingredients"
-        app:layout_constraintStart_toStartOf="@+id/dishNameLabel" />
+        android:text="Opis"
+        app:layout_constraintBaseline_toBaselineOf="@+id/description"
+        app:layout_constraintStart_toStartOf="@+id/taskNameLabel" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/images"
         android:layout_width="0dp"
         android:layout_height="150dp"
+        android:layout_marginStart="-35dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="55dp"
+        android:rotationY="-15"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ingredients"
-        tools:listitem="@layout/dish_image" />
+        app:layout_constraintTop_toBottomOf="@+id/description"
+        tools:listitem="@layout/task_image" />
 
     <Button
         android:id="@+id/save"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
         android:text="Save"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/images" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

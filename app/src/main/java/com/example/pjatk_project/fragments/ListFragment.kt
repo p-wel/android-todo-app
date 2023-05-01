@@ -7,30 +7,25 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.pjatk_project.DishesAdapter
+import com.example.pjatk_project.TasksAdapter
 import com.example.pjatk_project.Navigable
 import com.example.pjatk_project.adapters.SwipeToRemove
-import com.example.pjatk_project.data.DishDatabase
+import com.example.pjatk_project.data.TaskDatabase
 import com.example.pjatk_project.databinding.FragmentListBinding
-import com.example.pjatk_project.model.Dish
+import com.example.pjatk_project.model.Task
 import kotlin.concurrent.thread
 
-/**
- * A simple [Fragment] subclass.
- * Use the [ListFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class ListFragment : Fragment() {
 
     private lateinit var binding: FragmentListBinding
-    private var adapter: DishesAdapter? = null
-    private lateinit var db: DishDatabase
+    private var adapter: TasksAdapter? = null
+    private lateinit var db: TaskDatabase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        //requireContext() - żeby sięgnąć po kontekst aktywności, a nie kontekst fragmentu
-        db = DishDatabase.open(requireContext())
+        //requireContext - żeby sięgnąć po kontekst aktywności, a nie kontekst fragmentu
+        db = TaskDatabase.open(requireContext())
     }
 
     override fun onCreateView(
@@ -45,7 +40,7 @@ class ListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        adapter = DishesAdapter().apply {
+        adapter = TasksAdapter().apply {
             // podpięcie onItemClick od razu przy tworzeniu adaptera
             onItemClick = {
                 (activity as? Navigable)?.navigate(Navigable.Destination.Edit, it)
@@ -68,7 +63,7 @@ class ListFragment : Fragment() {
                     adapter?.removeItem(it)?.let {
                         // oddzielny wątek na usunięcie z bazy
                         thread {
-                            db.dishes.remove(it.id) // usunięcie z bazy
+                            db.tasks.remove(it.id) // usunięcie z bazy
                         }
                     }
                 }
@@ -89,11 +84,11 @@ class ListFragment : Fragment() {
 
     // oddzielny wątek na dostęp do bazy danych, żeby nie zajmować wątku głównego (UI)
     fun loadData() = thread {
-        val dishes = db.dishes.getAll().map { entity -> // mapowanie encji na obiekt Dish
-            Dish(
+        val tasks = db.tasks.getAll().map { entity -> // mapowanie encji na obiekt
+            Task(
                 entity.id,
                 entity.name,
-                entity.ingredients.split("\n"),
+                entity.description.split("\n"),
                 resources.getIdentifier( // pobranie identyfikatora zasobu
                     entity.icon,
                     "drawable",
@@ -103,7 +98,7 @@ class ListFragment : Fragment() {
         }
         // w wątku głównym UI
         requireActivity().runOnUiThread {
-            adapter?.replace(dishes) // dodanie danych pobranych z bazy danych do adaptera
+            adapter?.replace(tasks) // dodanie danych pobranych z bazy danych do adaptera
         }
     }
 
