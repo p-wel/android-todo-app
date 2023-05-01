@@ -1,10 +1,10 @@
 package com.example.pjatk_project
 
 import androidx.recyclerview.widget.DiffUtil
-import com.example.pjatk_project.model.Dish
+import com.example.pjatk_project.model.Task
 
 // callback - usprawni animację przy pracy z danymi na widoku (zmiany bez "mignięcia")
-class DishCallback(val notSorted: List<Dish>, val sorted: List<Dish>) : DiffUtil.Callback() {
+class TaskCallback(val notSorted: List<Task>, val sorted: List<Task>) : DiffUtil.Callback() {
     override fun getOldListSize(): Int = notSorted.size
 
     override fun getNewListSize(): Int = sorted.size

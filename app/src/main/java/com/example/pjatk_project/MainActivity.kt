@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity(), Navigable {
             .add(
                 R.id.container,
                 listFragment,
-                listFragment.javaClass.name //tag, po którym będzie można łatwo znaleźć w fragmetManagerze
+                listFragment.javaClass.name //tag, po którym będzie można łatwo znaleźć w fragmentManagerze
             )
             .commit() // wpięcie do managera
     }

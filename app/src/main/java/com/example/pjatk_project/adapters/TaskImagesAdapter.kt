@@ -5,10 +5,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pjatk_project.R
-import com.example.pjatk_project.databinding.DishImageBinding
+import com.example.pjatk_project.databinding.TaskImageBinding
 
 // holder na obrazki
-class DishImageViewHolder(val binding: DishImageBinding) : RecyclerView.ViewHolder(binding.root) {
+class TaskImageViewHolder(val binding: TaskImageBinding) : RecyclerView.ViewHolder(binding.root) {
 
     // bindowanie obrazka o danym resId
     fun bind(resId: Int, isSelected: Boolean) {
@@ -19,23 +19,31 @@ class DishImageViewHolder(val binding: DishImageBinding) : RecyclerView.ViewHold
 }
 
 // adapter łączący widok z danymi
-class DishImagesAdapter : RecyclerView.Adapter<DishImageViewHolder>() {
+class TaskImagesAdapter : RecyclerView.Adapter<TaskImageViewHolder>() {
 
     // przypisanie png do listy images
-    private val images = listOf(R.drawable.pierogi, R.drawable.pizza)
+    private val images = listOf(
+        R.drawable.done,
+        R.drawable.food,
+        R.drawable.home,
+        R.drawable.important,
+        R.drawable.question,
+        R.drawable.school,
+        R.drawable.work
+    )
 
     // trackowanie zaznaczonego elementu
     private var selectedPosition: Int = 0 // pozycja na liście
     val selectedIdRes: Int
         get() = images[selectedPosition]
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DishImageViewHolder {
-        val binding = DishImageBinding.inflate(
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskImageViewHolder {
+        val binding = TaskImageBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
             false // żeby ListView nie przypiął się do samej listy
         )
-        return DishImageViewHolder(binding).also { vh ->  // also{} to lambda wykonująca się przed returnem, vh to viewHolder
+        return TaskImageViewHolder(binding).also { vh ->  // also{} to lambda wykonująca się przed returnem, vh to viewHolder
             binding.root.setOnClickListener {
                 setSelected(vh.layoutPosition) // ustawienie selecta na aktualną pozycję w layoucie
             }
@@ -50,7 +58,7 @@ class DishImagesAdapter : RecyclerView.Adapter<DishImageViewHolder>() {
     }
 
     // podpinanie ViewHoldera na odpowiednią pozycję
-    override fun onBindViewHolder(holder: DishImageViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: TaskImageViewHolder, position: Int) {
         holder.bind(images[position], position == selectedPosition)
     }
 
@@ -60,7 +68,7 @@ class DishImagesAdapter : RecyclerView.Adapter<DishImageViewHolder>() {
     // wyszukanie indeksu obrazka i ustawienie go za pomocą setSelected()
     fun setSelection(icon: Int?) {
         val index = images.indexOfFirst { it == icon }
-        if (index == -1) return // jeśli nie znajdzie, to nie ustawiaj selecta
+        if (index == -1) return // jeśli nie znajdzie, to nie ustawi selecta
         setSelected(index)
     }
 }

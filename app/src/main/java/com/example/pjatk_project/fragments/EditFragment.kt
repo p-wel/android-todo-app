@@ -6,9 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.pjatk_project.adapters.DishImagesAdapter
-import com.example.pjatk_project.data.DishDatabase
-import com.example.pjatk_project.data.model.DishEntity
+import com.example.pjatk_project.adapters.TaskImagesAdapter
+import com.example.pjatk_project.data.TaskDatabase
+import com.example.pjatk_project.data.model.TaskEntity
 import com.example.pjatk_project.databinding.FragmentEditBinding
 import kotlin.concurrent.thread
 
@@ -16,23 +16,18 @@ import kotlin.concurrent.thread
 const val ARG_EDIT_ID = "edit_id"
 const val ARG_ADD_ID = "add_id"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [EditFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class EditFragment : Fragment() {
 
     private lateinit var binding: FragmentEditBinding
-    private lateinit var adapter: DishImagesAdapter
-    private lateinit var db: DishDatabase
-    private var dish: DishEntity? = null
+    private lateinit var adapter: TaskImagesAdapter
+    private lateinit var db: TaskDatabase
+    private var task: TaskEntity? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         // dostęp do bazy
-        db = DishDatabase.open(requireContext())
+        db = TaskDatabase.open(requireContext())
     }
 
     override fun onCreateView(
@@ -47,7 +42,7 @@ class EditFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        adapter = DishImagesAdapter()
+        adapter = TaskImagesAdapter()
 
         // pobranie id widoku
         val id = requireArguments().getLong(
@@ -58,17 +53,17 @@ class EditFragment : Fragment() {
         if (id != -1L) {
             // [edycja]
             thread { //dostęp do bazy w oddzielnym wątku (nie można blokować głównego wątku UI!)
-                dish = db.dishes.getDish(id) // pobranie odpowiedniej encji z bazy
+                task = db.tasks.getTask(id) // pobranie odpowiedniej encji z bazy
 
                 // przypisanie danych w innym wątku - na głównym wątku UI
                 requireActivity().runOnUiThread {
                     // wypisanie danych aktualnego elementu w formularzu edycji (lub brak, jeśli używa się dodawania)
-                    binding.dishName.setText(dish?.name ?: "")
-                    binding.ingredients.setText(dish?.ingredients ?: "")
+                    binding.taskName.setText(task?.name ?: "")
+                    binding.description.setText(task?.description ?: "")
 
                     // ustawienie selecta na odpowiedniej ikonie [edycja]
                     adapter.setSelection(
-                        dish?.icon.let { //let{} żeby nie przekazać tu przypadkiem nulla
+                        task?.icon.let { //let{} żeby nie przekazać tu przypadkiem nulla
                             resources.getIdentifier(it, "drawable", requireContext().packageName)
                         }
                     )
@@ -87,23 +82,23 @@ class EditFragment : Fragment() {
 
         // save wykonujący edycję/dodawanie elementów
         binding.save.setOnClickListener {
-            val dish = dish?.copy( // jeśli istnieje dish, to stwórz jego kopię
+            val task = task?.copy( // jeśli istnieje obiekt, to stwórz jego kopię
                 // [edycja]
-                name = binding.dishName.text.toString(),
-                ingredients = binding.ingredients.text.toString(),
+                name = binding.taskName.text.toString(),
+                description = binding.description.text.toString(),
                 icon = resources.getResourceEntryName(adapter.selectedIdRes) // pobranie ikony z aktualnego elementu
-            ) ?: DishEntity( // jeśli nie istnieje dish, to dodaj nowy obiekt
+            ) ?: TaskEntity( // jeśli nie istnieje obiekt, to dodaj nowy
                 // [dodawanie]
-                name = binding.dishName.text.toString(),
-                ingredients = binding.ingredients.text.toString(),
+                name = binding.taskName.text.toString(),
+                description = binding.description.text.toString(),
                 icon = resources.getResourceEntryName(adapter.selectedIdRes) // pobranie ikony z aktualnego elementu
             )
-            this.dish =
-                dish // dla pewności, przypisanie zaktualizowanego elementu (do ew. późniejszego użytku)
+            this.task =
+                task // dla pewności, przypisanie zaktualizowanego elementu (do ew. późniejszego użytku)
 
             // osobny wątek na dodanie nowego obiektu
             thread {
-                db.dishes.addDish(dish) // dodanie nowego Dish do bazy
+                db.tasks.addTask(task) // dodanie nowego obiektu do bazy
                 parentFragmentManager.popBackStack()
             }
         }
