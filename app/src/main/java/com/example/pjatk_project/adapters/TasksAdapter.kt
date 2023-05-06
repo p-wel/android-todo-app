@@ -59,7 +59,7 @@ class TasksAdapter : RecyclerView.Adapter<TaskViewHolder>() {
     fun sort() {
         val notSorted = data.toList()
         val callback = TaskCallback(notSorted, data)
-        data.sortBy { it.name }
+        data.sortBy { it.name.lowercase() }
         val result = DiffUtil.calculateDiff(callback) // sprawdzenie, czy itemy są takie same
         result.dispatchUpdatesTo(this) // aktualizacja danych na this adapterze
     }

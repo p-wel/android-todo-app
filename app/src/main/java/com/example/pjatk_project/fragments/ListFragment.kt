@@ -47,6 +47,7 @@ class ListFragment : Fragment() {
             }
         }
 
+        // wykonanie czynności początkowych, na powstałym widoku
         loadData()
 
         // podpięcie listy z danymi -> do widoku listy
@@ -76,10 +77,6 @@ class ListFragment : Fragment() {
             //      jeśli nie, to null
             (activity as? Navigable)?.navigate(Navigable.Destination.Add)
         }
-
-        binding.btSort.setOnClickListener {
-            adapter?.sort()
-        }
     }
 
     // oddzielny wątek na dostęp do bazy danych, żeby nie zajmować wątku głównego (UI)
@@ -99,6 +96,7 @@ class ListFragment : Fragment() {
         // w wątku głównym UI
         requireActivity().runOnUiThread {
             adapter?.replace(tasks) // dodanie danych pobranych z bazy danych do adaptera
+            adapter?.sort()
         }
     }
 
