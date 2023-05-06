@@ -1,78 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#DBFFC1"
-    tools:context=".fragments.EditFragment">
+    android:layout_height="match_parent">
 
-    <EditText
-        android:id="@+id/description"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:ems="10"
-        android:gravity="start|top|left"
-        android:inputType="textMultiLine|textPersonName"
-        android:lines="8"
-        app:layout_constraintEnd_toEndOf="@+id/taskName"
-        app:layout_constraintStart_toStartOf="@+id/taskName"
-        app:layout_constraintTop_toBottomOf="@+id/taskName" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#DBFFC1"
+        tools:context=".fragments.EditFragment">
 
-    <EditText
-        android:id="@+id/taskName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/taskNameLabel"
-        app:layout_constraintTop_toTopOf="parent" />
+        <EditText
+            android:id="@+id/description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:ems="10"
+            android:gravity="start|top|left"
+            android:inputType="textMultiLine|textPersonName"
+            android:lines="8"
+            app:layout_constraintEnd_toEndOf="@+id/taskName"
+            app:layout_constraintStart_toStartOf="@+id/taskName"
+            app:layout_constraintTop_toBottomOf="@+id/taskName" />
 
-    <TextView
-        android:id="@+id/taskNameLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:text="Nazwa"
-        app:layout_constraintBaseline_toBaselineOf="@+id/taskName"
-        app:layout_constraintEnd_toStartOf="@+id/taskName"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent" />
+        <EditText
+            android:id="@+id/taskName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/taskNameLabel"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/descriptionLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Opis"
-        app:layout_constraintBaseline_toBaselineOf="@+id/description"
-        app:layout_constraintStart_toStartOf="@+id/taskNameLabel" />
+        <TextView
+            android:id="@+id/taskNameLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="Nazwa"
+            app:layout_constraintBaseline_toBaselineOf="@+id/taskName"
+            app:layout_constraintEnd_toStartOf="@+id/taskName"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/images"
-        android:layout_width="0dp"
-        android:layout_height="150dp"
-        android:layout_marginStart="-35dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="55dp"
-        android:rotationY="-15"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/description"
-        tools:listitem="@layout/task_image" />
+        <TextView
+            android:id="@+id/descriptionLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Opis"
+            app:layout_constraintBaseline_toBaselineOf="@+id/description"
+            app:layout_constraintStart_toStartOf="@+id/taskNameLabel" />
 
-    <Button
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/images"
+            android:layout_width="0dp"
+            android:layout_height="150dp"
+            android:layout_marginStart="-35dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="55dp"
+            android:rotationY="-15"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/description"
+            tools:listitem="@layout/task_image" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/save"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        android:text="Save"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        android:src="@drawable/save_button" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
