@@ -1,9 +1,11 @@
-package com.example.pjatk_project
+package com.example.pjatk_project.adapters
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.example.pjatk_project.TaskCallback
 import com.example.pjatk_project.databinding.ListItemBinding
 import com.example.pjatk_project.model.Task
 
@@ -21,8 +23,9 @@ class TaskViewHolder(val binding: ListItemBinding) : RecyclerView.ViewHolder(bin
 class TasksAdapter : RecyclerView.Adapter<TaskViewHolder>() {
     private val data = mutableListOf<Task>()
 
-    // zmienna przyjmująca Long. Jeśli jest pusty, to nic nie robi
+    // zmienna przyjmująca Long - data id. Jeśli jest pusty, to nic nie robi
     var onItemClick: (Long) -> Unit = { }
+    var onItemLongClick: (Long) -> Unit = { }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
         val binding = ListItemBinding.inflate(
@@ -30,12 +33,20 @@ class TasksAdapter : RecyclerView.Adapter<TaskViewHolder>() {
             parent,
             false // żeby ListView nie przypiął się do samej listy
         )
-        return TaskViewHolder(binding).also { vh ->
-            // na ViewHolder podpięcie onItemClick z podaniem odpowiedniego id
-            binding.root.setOnClickListener {
-                onItemClick(data[vh.layoutPosition].id)
-            }
+        val viewHolder: TaskViewHolder = TaskViewHolder(binding)
+
+        // na ViewHolder podpięcie onItemClick z podaniem odpowiedniego id
+        binding.root.setOnClickListener {
+            onItemClick(data[viewHolder.layoutPosition].id)
         }
+
+        binding.root.setOnLongClickListener(View.OnLongClickListener {
+            onItemLongClick(data[viewHolder.layoutPosition].id)
+            true
+        })
+
+
+        return viewHolder
     }
 
     // podpinanie ViewHoldera na odpowiednią pozycję
