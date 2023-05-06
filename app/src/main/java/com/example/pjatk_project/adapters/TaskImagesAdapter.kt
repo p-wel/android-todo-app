@@ -24,12 +24,13 @@ class TaskImagesAdapter : RecyclerView.Adapter<TaskImageViewHolder>() {
     // przypisanie png do listy images
     private val images = listOf(
         R.drawable.done,
+        R.drawable.school,
+        R.drawable.work,
         R.drawable.food,
         R.drawable.home,
         R.drawable.important,
-        R.drawable.question,
-        R.drawable.school,
-        R.drawable.work
+        R.drawable.question
+
     )
 
     // trackowanie zaznaczonego elementu
