@@ -65,6 +65,7 @@ class ListFragment : Fragment() {
                         // oddzielny wątek na usunięcie z bazy
                         thread {
                             db.tasks.remove(it.id) // usunięcie z bazy
+                            countTasks()
                         }
                     }
                 }
@@ -97,7 +98,12 @@ class ListFragment : Fragment() {
         requireActivity().runOnUiThread {
             adapter?.replace(tasks) // dodanie danych pobranych z bazy danych do adaptera
             adapter?.sort()
+            countTasks()
         }
+    }
+
+    fun countTasks() {
+        binding.counterText.text = adapter?.itemCount.toString()
     }
 
     override fun onStart() {

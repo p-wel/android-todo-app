@@ -12,19 +12,37 @@
         android:background="#DBFFC1"
         tools:context=".fragments.ListFragment">
 
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/bar"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
+        <TextView
+            android:id="@+id/counter_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
             android:layout_marginBottom="8dp"
+            android:text="Counter"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toTopOf="@id/barrier"
+            app:layout_constraintEnd_toStartOf="@+id/counter_text"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/counter_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="8dp"
+            android:text="Number"
+            android:textSize="16sp"
             app:layout_constraintBottom_toTopOf="@id/barrier"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:itemCount="1"
-            tools:listitem="@layout/bar_item" />
+            app:layout_constraintStart_toEndOf="@+id/counter_label"
+            app:layout_constraintTop_toTopOf="parent" />
+
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/list"
@@ -45,8 +63,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:barrierDirection="bottom"
-            app:constraint_referenced_ids="bar" />
-
+            app:constraint_referenced_ids="counter_label,counter_text" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
