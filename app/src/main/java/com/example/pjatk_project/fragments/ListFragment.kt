@@ -7,8 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.pjatk_project.TasksAdapter
 import com.example.pjatk_project.Navigable
+import com.example.pjatk_project.adapters.TasksAdapter
 import com.example.pjatk_project.adapters.SwipeToRemove
 import com.example.pjatk_project.data.TaskDatabase
 import com.example.pjatk_project.databinding.FragmentListBinding
@@ -45,8 +45,15 @@ class ListFragment : Fragment() {
             onItemClick = {
                 (activity as? Navigable)?.navigate(Navigable.Destination.Edit, it)
             }
+            onItemLongClick = {
+                RemoveFragment(this@ListFragment).show(
+                    requireActivity().supportFragmentManager,
+                    null
+                )
+            }
         }
 
+        // wykonanie czynności początkowych, na powstałym widoku
         loadData()
 
         // podpięcie listy z danymi -> do widoku listy
@@ -64,6 +71,7 @@ class ListFragment : Fragment() {
                         // oddzielny wątek na usunięcie z bazy
                         thread {
                             db.tasks.remove(it.id) // usunięcie z bazy
+                            countTasks()
                         }
                     }
                 }
@@ -75,10 +83,6 @@ class ListFragment : Fragment() {
             //      jeśli tak, to użyte zostaje navigate()
             //      jeśli nie, to null
             (activity as? Navigable)?.navigate(Navigable.Destination.Add)
-        }
-
-        binding.btSort.setOnClickListener {
-            adapter?.sort()
         }
     }
 
@@ -99,6 +103,32 @@ class ListFragment : Fragment() {
         // w wątku głównym UI
         requireActivity().runOnUiThread {
             adapter?.replace(tasks) // dodanie danych pobranych z bazy danych do adaptera
+            adapter?.sort()
+            countTasks()
+        }
+    }
+
+    fun countTasks() {
+        binding.counterText.text = adapter?.itemCount.toString()
+    }
+
+    fun removeItemNow() {
+        binding.list.let {
+            // it. oznacza tu indeks elementu na liście
+            it.adapter = adapter // podpięcie adaptera do ListFragment
+            it.layoutManager =
+                LinearLayoutManager(requireContext()) // ustalenie layoutu dla dodawania elementów
+
+            // sprawdzenie, czy istnieje item do usunięcia
+            adapter?.removeItem(it.getChildLayoutPosition(it))?.let { // TODO find this task's proper id
+                // oddzielny wątek na usunięcie z bazy
+                thread {
+                    db.tasks.remove(it.id) // usunięcie z bazy // TODO find this task's proper id
+                    countTasks()
+                }
+            }
+
+
         }
     }
 
