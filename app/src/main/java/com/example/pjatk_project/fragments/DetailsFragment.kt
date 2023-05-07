@@ -50,7 +50,7 @@ class DetailsFragment : Fragment() {
 
     private fun getViewId(): Long {
         return requireArguments().getLong(
-            ARG_EDIT_ID, // [edycja]
+            ARG_DETAILS_ID, // [szczegóły]
             -1 // [default]
         )
     }
