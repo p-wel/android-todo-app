@@ -1,5 +1,6 @@
 package com.example.pjatk_project.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -90,6 +91,16 @@ class DetailsFragment : Fragment() {
             val id = requireArguments().getLong(ARG_DETAILS_ID)
             parentFragmentManager.popBackStack()
             (activity as? Navigable)?.navigate(Navigable.Destination.Edit, id)
+        }
+
+        binding.buttonShare.setOnClickListener {
+            val message = task?.name + "\n" + task?.description
+            val intent = Intent(Intent.ACTION_SEND)
+            intent.type = "text/plain"
+            intent.putExtra("Share this", message)
+
+            val chooser = Intent.createChooser(intent, "Share using...")
+            startActivity(chooser)
         }
     }
 }

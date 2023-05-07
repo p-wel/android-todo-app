@@ -81,7 +81,16 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
-        android:contentDescription="@string/save_button"
+        android:contentDescription="@string/edit_button"
         android:src="@drawable/edit_button" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/button_share"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|start"
+        android:layout_margin="16dp"
+        android:contentDescription="@string/share_button"
+        android:src="@drawable/share_button" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

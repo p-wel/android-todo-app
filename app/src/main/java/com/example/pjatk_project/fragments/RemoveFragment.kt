@@ -10,7 +10,6 @@ class RemoveFragment(private val listFragment: ListFragment) : DialogFragment() 
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
 
-
         return AlertDialog.Builder(requireContext())
             .setTitle("Remove")
             .setMessage("Remove the task?")
