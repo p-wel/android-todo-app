@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">Best TODO App</string>
+    <string name="counter">Counter</string>
+    <string name="number">Number</string>
+    <string name="task_description">Task description</string>
+    <string name="task_name">Task name</string>
+    <string name="name">Name</string>
+    <string name="description">Description</string>
+    <string name="save_button">Save button</string>
+    <string name="number_of_tasks">Number of tasks:</string>
+    <string name="add_button">Add button</string>
 </resources>

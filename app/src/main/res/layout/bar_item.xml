@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
@@ -20,7 +19,7 @@
             android:layout_marginEnd="16dp"
             android:ellipsize="end"
             android:maxLines="1"
-            android:text="Counter"
+            android:text="@string/counter"
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold"
@@ -36,7 +35,7 @@
             android:layout_marginStart="16dp"
             android:ellipsize="end"
             android:maxLines="1"
-            android:text="Number"
+            android:text="@string/number"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="@+id/label_counter"
             app:layout_constraintStart_toEndOf="@+id/label_counter" />
