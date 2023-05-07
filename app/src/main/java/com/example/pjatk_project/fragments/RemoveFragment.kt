@@ -6,7 +6,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 
-class RemoveFragment(val listFragment: ListFragment) : DialogFragment() {
+class RemoveFragment(private val listFragment: ListFragment) : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
 
