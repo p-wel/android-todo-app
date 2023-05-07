@@ -15,7 +15,7 @@ class RemoveFragment(val listFragment: ListFragment) : DialogFragment() {
             .setTitle("Remove")
             .setMessage("Remove the task?")
             .setPositiveButton("Remove") { _: DialogInterface, _: Int ->
-                listFragment.removeItemNow()
+                listFragment.invokeItemRemoval()
             }
             .setNegativeButton("Back") { _: DialogInterface, _: Int ->
                 dismiss()
