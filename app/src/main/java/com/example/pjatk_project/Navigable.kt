@@ -8,5 +8,5 @@ interface Navigable {
         Details
     }
 
-    fun navigate(to: Destination, id: Long? = null)
+    fun navigate(destination: Destination, id: Long? = null)
 }
