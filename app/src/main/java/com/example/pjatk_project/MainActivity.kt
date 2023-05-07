@@ -3,6 +3,10 @@ package com.example.pjatk_project
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentTransaction
+import com.example.pjatk_project.Navigable.Destination.Add
+import com.example.pjatk_project.Navigable.Destination.Details
+import com.example.pjatk_project.Navigable.Destination.Edit
+import com.example.pjatk_project.Navigable.Destination.List
 import com.example.pjatk_project.databinding.ActivityMainBinding
 import com.example.pjatk_project.fragments.ARG_ADD_ID
 import com.example.pjatk_project.fragments.ARG_DETAILS_ID
@@ -25,19 +29,19 @@ class MainActivity : AppCompatActivity(), Navigable {
     override fun navigate(destination: Navigable.Destination, id: Long?) {
         supportFragmentManager.beginTransaction().apply {
             when (destination) {
-                Navigable.Destination.List -> {
+                List -> {
                     replaceWithListFragment(this)
                 }
 
-                Navigable.Destination.Add -> {
+                Add -> {
                     replaceWithEditFragment(this, ARG_ADD_ID, id)
                 }
 
-                Navigable.Destination.Edit -> {
+                Edit -> {
                     replaceWithEditFragment(this, ARG_EDIT_ID, id)
                 }
 
-                Navigable.Destination.Details -> {
+                Details -> {
                     replaceWithDetailsFragment(this, ARG_DETAILS_ID, id)
                 }
             }

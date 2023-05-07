@@ -42,7 +42,7 @@ class DetailsFragment : Fragment() {
         val viewId = getViewId()
 
         if (viewId != -1L) {
-            putDataIntoFragment(viewId) // TODO pass proper item's id
+            putDataIntoFragment(viewId)
         }
         putImagesIntoFragment()
         setListeners()
@@ -79,7 +79,7 @@ class DetailsFragment : Fragment() {
         binding.images.apply {
             // wewnątrz "apply{}":
             //      - this jest obiektem RecyclerView
-            //      - this@EditFragment jest obiektem, którego adapter ma zostać przypisany
+            //      - this@DetailsFragment jest obiektem, którego adapter ma zostać przypisany
             adapter = this@DetailsFragment.adapter
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         }
