@@ -87,8 +87,9 @@ class DetailsFragment : Fragment() {
 
     private fun setListeners() {
         binding.buttonEdit.setOnClickListener {
+            val id = requireArguments().getLong(ARG_DETAILS_ID)
             parentFragmentManager.popBackStack()
-            (activity as? Navigable)?.navigate(Navigable.Destination.Edit)
+            (activity as? Navigable)?.navigate(Navigable.Destination.Edit, id)
         }
     }
 }
