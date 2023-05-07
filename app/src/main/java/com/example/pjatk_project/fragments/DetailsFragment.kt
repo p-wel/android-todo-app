@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.pjatk_project.Navigable
 import com.example.pjatk_project.adapters.TaskImagesAdapter
-import com.example.pjatk_project.adapters.TasksAdapter
 import com.example.pjatk_project.data.TaskDatabase
 import com.example.pjatk_project.data.model.TaskEntity
 import com.example.pjatk_project.databinding.FragmentDetailsBinding
@@ -43,10 +42,8 @@ class DetailsFragment : Fragment() {
         val viewId = getViewId()
 
         if (viewId != -1L) {
-            // [szczegóły]
-            putDataIntoFragment(viewId)
+            putDataIntoFragment(viewId) // TODO pass proper item's id
         }
-        // [szczegóły]
         putImagesIntoFragment()
         setListeners()
     }
@@ -91,12 +88,7 @@ class DetailsFragment : Fragment() {
     private fun setListeners() {
         binding.buttonEdit.setOnClickListener {
             parentFragmentManager.popBackStack()
-
-//            val tasksAdapter: TasksAdapter = TasksAdapter().apply {
-//                onItemClick = {
-//                    (activity as? Navigable)?.navigate(Navigable.Destination.Edit, it)
-//                }
-//            }
+            (activity as? Navigable)?.navigate(Navigable.Destination.Edit)
         }
     }
 }

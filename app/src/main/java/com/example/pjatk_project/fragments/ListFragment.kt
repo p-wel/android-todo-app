@@ -117,7 +117,7 @@ class ListFragment : Fragment() {
     private fun setListeners() {
         adapter = TasksAdapter().apply {
             onItemClick = {
-                (activity as? Navigable)?.navigate(Navigable.Destination.Edit, it)
+                (activity as? Navigable)?.navigate(Navigable.Destination.Details, it)
             }
             onItemLongClick = {
                 RemoveFragment(this@ListFragment).show(
