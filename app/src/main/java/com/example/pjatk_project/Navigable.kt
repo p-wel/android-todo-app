@@ -4,7 +4,8 @@ interface Navigable {
     enum class Destination {
         List,
         Add,
-        Edit
+        Edit,
+        Details
     }
 
     fun navigate(to: Destination, id: Long? = null)

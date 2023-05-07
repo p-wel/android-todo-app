@@ -78,7 +78,7 @@ class ListFragment : Fragment() {
             ).attachToRecyclerView(it)
         }
 
-        binding.btAdd.setOnClickListener {
+        binding.buttonAdd.setOnClickListener {
             // "?" to sprawdzanie czy dane activity implementuje interfejs Navigable:
             //      jeśli tak, to użyte zostaje navigate()
             //      jeśli nie, to null

@@ -15,6 +15,7 @@ import kotlin.concurrent.thread
 // id tego fragmentu (przydatne przy przekazywaniu argumentów podczas nawigacji)
 const val ARG_EDIT_ID = "edit_id"
 const val ARG_ADD_ID = "add_id"
+const val ARG_DETAILS_ID = "details_id"
 
 class EditFragment : Fragment() {
 
@@ -81,7 +82,7 @@ class EditFragment : Fragment() {
         }
 
         // save wykonujący edycję/dodawanie elementów
-        binding.save.setOnClickListener {
+        binding.buttonSave.setOnClickListener {
             val task = task?.copy( // jeśli istnieje obiekt, to stwórz jego kopię
                 // [edycja]
                 name = binding.taskName.text.toString(),

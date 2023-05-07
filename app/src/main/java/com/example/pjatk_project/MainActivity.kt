@@ -4,7 +4,9 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.pjatk_project.databinding.ActivityMainBinding
 import com.example.pjatk_project.fragments.ARG_ADD_ID
+import com.example.pjatk_project.fragments.ARG_DETAILS_ID
 import com.example.pjatk_project.fragments.ARG_EDIT_ID
+import com.example.pjatk_project.fragments.DetailsFragment
 import com.example.pjatk_project.fragments.EditFragment
 import com.example.pjatk_project.fragments.ListFragment
 
@@ -60,7 +62,7 @@ class MainActivity : AppCompatActivity(), Navigable {
                     replace(
                         R.id.container,
                         EditFragment::class.java,
-                        Bundle().apply {// podanie argumentów klasy
+                        Bundle().apply { // podanie argumentów klasy
                             putLong(
                                 ARG_EDIT_ID, // id edycji
                                 id ?: -1L // jeśli nie ma id, to ustaw na -1
@@ -69,6 +71,21 @@ class MainActivity : AppCompatActivity(), Navigable {
                         EditFragment::class.java.name // nadanie tag name dla ułatwienia
                     )
                     addToBackStack(EditFragment::class.java.name) // funkcja back, dodanie do stacku
+                }
+
+                Navigable.Destination.Details -> {
+                    replace(
+                        R.id.container,
+                        DetailsFragment::class.java,
+                        Bundle().apply { // podanie argumentów klasy
+                            putLong(
+                                ARG_DETAILS_ID, // id szczegółów
+                                id ?: -1L // jeśli nie ma id, to ustaw na -1
+                            )
+                        },
+                        DetailsFragment::class.java.name // nadanie tag name dla ułatwienia
+                    )
+                    addToBackStack(DetailsFragment::class.java.name) // funkcja back, dodanie do stacku
                 }
             }
         }.commit()
