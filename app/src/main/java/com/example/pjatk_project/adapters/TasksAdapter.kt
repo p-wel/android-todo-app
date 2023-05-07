@@ -9,42 +9,18 @@ import com.example.pjatk_project.TaskCallback
 import com.example.pjatk_project.databinding.ListItemBinding
 import com.example.pjatk_project.model.Task
 
-// holder na dane
-class TaskViewHolder(val binding: ListItemBinding) : RecyclerView.ViewHolder(binding.root) {
-
-    fun bind(task: Task) {
-        binding.name.text = task.name
-        binding.description.text = task.description.joinToString(",\n")
-        binding.image.setImageResource(task.resId)
-    }
-}
-
 // adapter łączący widok z danymi
 class TasksAdapter : RecyclerView.Adapter<TaskViewHolder>() {
     private val data = mutableListOf<Task>()
 
-    // zmienna przyjmująca Long - data id. Jeśli jest pusty, to nic nie robi
+    // zmienna przyjmująca Long data id. Jeśli jest pusty, to nic nie robi
     var onItemClick: (Long) -> Unit = { }
     var onItemLongClick: (Long) -> Unit = { }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
-        val binding = ListItemBinding.inflate(
-            LayoutInflater.from(parent.context),
-            parent,
-            false // żeby ListView nie przypiął się do samej listy
-        )
-        val viewHolder: TaskViewHolder = TaskViewHolder(binding)
-
-        // na ViewHolder podpięcie onItemClick z podaniem odpowiedniego id
-        binding.root.setOnClickListener {
-            onItemClick(data[viewHolder.layoutPosition].id)
-        }
-
-        binding.root.setOnLongClickListener(View.OnLongClickListener {
-            onItemLongClick(data[viewHolder.layoutPosition].id)
-            true
-        })
-
+        val binding = setBinding(parent)
+        val viewHolder = TaskViewHolder(binding)
+        setListeners(binding, viewHolder)
 
         return viewHolder
     }
@@ -56,6 +32,26 @@ class TasksAdapter : RecyclerView.Adapter<TaskViewHolder>() {
 
     // określenie ilości elementów w RecyclerView
     override fun getItemCount(): Int = data.size
+
+    private fun setBinding(parent: ViewGroup): ListItemBinding {
+        return ListItemBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent,
+            false // żeby ListView nie przypiął się do samej listy
+        )
+    }
+
+    private fun setListeners(binding: ListItemBinding, viewHolder: TaskViewHolder) {
+        // na ViewHolder podpięcie onItemClick z podaniem odpowiedniego id
+        binding.root.setOnClickListener {
+            onItemClick(data[viewHolder.layoutPosition].id)
+        }
+
+        binding.root.setOnLongClickListener(View.OnLongClickListener {
+            onItemLongClick(data[viewHolder.layoutPosition].id)
+            true
+        })
+    }
 
     // własna metoda podmieniająca listę i powiadamiająca widok o tej zmianie
     fun replace(newData: List<Task>) {
