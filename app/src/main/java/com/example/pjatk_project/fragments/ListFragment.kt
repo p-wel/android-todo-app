@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.example.pjatk_project.Navigable
 import com.example.pjatk_project.adapters.TasksAdapter
 import com.example.pjatk_project.adapters.SwipeToRemove
