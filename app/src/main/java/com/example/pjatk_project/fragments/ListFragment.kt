@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.example.pjatk_project.Navigable
 import com.example.pjatk_project.adapters.TasksAdapter
 import com.example.pjatk_project.adapters.SwipeToRemove
@@ -61,14 +62,13 @@ class ListFragment : Fragment() {
             it.layoutManager = LinearLayoutManager(requireContext())
 
             // sprawdzenie, czy istnieje item do usunięcia
-            adapter?.removeItem(it.getChildLayoutPosition(it))
-                ?.let {
-                    // oddzielny wątek na usunięcie z bazy
-                    thread {
-                        db.tasks.remove(it.id) // usunięcie z bazy // TODO pass this task's proper id
-                        countTasks()
-                    }
+            adapter?.removeItem(0)?.let { // TODO pass this task's proper id
+                // oddzielny wątek na usunięcie z bazy
+                thread {
+                    db.tasks.remove(it.id) // usunięcie z bazy
+                    countTasks()
                 }
+            }
             parentFragmentManager.popBackStack()
         }
     }
