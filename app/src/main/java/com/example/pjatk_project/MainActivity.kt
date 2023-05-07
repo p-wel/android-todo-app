@@ -40,6 +40,7 @@ class MainActivity : AppCompatActivity(), Navigable {
                         listFragment.javaClass.name
                     )
                 }
+
                 Navigable.Destination.Add -> {
                     replace(
                         R.id.container,
@@ -54,6 +55,7 @@ class MainActivity : AppCompatActivity(), Navigable {
                     )
                     addToBackStack(EditFragment::class.java.name) // funkcja back, dodanie do stacku
                 }
+
                 Navigable.Destination.Edit -> {
                     replace(
                         R.id.container,
