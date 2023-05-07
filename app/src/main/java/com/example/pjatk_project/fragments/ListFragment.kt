@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.pjatk_project.Navigable
 import com.example.pjatk_project.adapters.TasksAdapter
 import com.example.pjatk_project.adapters.SwipeToRemove
@@ -23,8 +24,7 @@ class ListFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        //requireContext - żeby sięgnąć po kontekst aktywności, a nie kontekst fragmentu
+        //requireContext - żeby sięgnąć po kontekst aktywności, a nie fragmentu
         db = TaskDatabase.open(requireContext())
     }
 
@@ -39,55 +39,57 @@ class ListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        adapter = TasksAdapter().apply {
-            // podpięcie onItemClick od razu przy tworzeniu adaptera
-            onItemClick = {
-                (activity as? Navigable)?.navigate(Navigable.Destination.Edit, it)
-            }
-            onItemLongClick = {
-                RemoveFragment(this@ListFragment).show(
-                    requireActivity().supportFragmentManager,
-                    null
-                )
-            }
-        }
-
-        // wykonanie czynności początkowych, na powstałym widoku
         loadData()
+        setListeners()
+        setBindings()
+    }
 
-        // podpięcie listy z danymi -> do widoku listy
+    private fun setBindings() {
         binding.list.let {
-            // it. oznacza tu indeks elementu na liście
+            // it - indeks elementu na liście
             it.adapter = adapter // podpięcie adaptera do ListFragment
-            it.layoutManager =
-                LinearLayoutManager(requireContext()) // ustalenie layoutu dla dodawania elementów
+            it.layoutManager = LinearLayoutManager(requireContext())
 
-            // podpięcie touchHelpera
-            ItemTouchHelper(
-                SwipeToRemove {
-                    // sprawdzenie, czy istnieje item do usunięcia
-                    adapter?.removeItem(it)?.let {
-                        // oddzielny wątek na usunięcie z bazy
-                        thread {
-                            db.tasks.remove(it.id) // usunięcie z bazy
-                            countTasks()
-                        }
-                    }
-                }
-            ).attachToRecyclerView(it)
-        }
-
-        binding.btAdd.setOnClickListener {
-            // "?" to sprawdzanie czy dane activity implementuje interfejs Navigable:
-            //      jeśli tak, to użyte zostaje navigate()
-            //      jeśli nie, to null
-            (activity as? Navigable)?.navigate(Navigable.Destination.Add)
+            setSwipeToRemove(it)
         }
     }
 
+    fun invokeItemRemoval() {
+        binding.list.let {
+            // it. oznacza tu indeks elementu na liście
+            it.adapter = adapter // podpięcie adaptera do ListFragment
+            it.layoutManager = LinearLayoutManager(requireContext())
+
+            // sprawdzenie, czy istnieje item do usunięcia
+            adapter?.removeItem(it.getChildLayoutPosition(it))
+                ?.let {
+                    // oddzielny wątek na usunięcie z bazy
+                    thread {
+                        db.tasks.remove(it.id) // usunięcie z bazy // TODO pass this task's proper id
+                        countTasks()
+                    }
+                }
+            parentFragmentManager.popBackStack()
+        }
+    }
+
+    private fun setSwipeToRemove(it: RecyclerView) {
+        ItemTouchHelper(
+            SwipeToRemove {
+                // sprawdzenie, czy istnieje item do usunięcia
+                adapter?.removeItem(it)?.let {
+                    // oddzielny wątek na usunięcie z bazy
+                    thread {
+                        db.tasks.remove(it.id) // usunięcie z bazy
+                        countTasks()
+                    }
+                }
+            }
+        ).attachToRecyclerView(it)
+    }
+
     // oddzielny wątek na dostęp do bazy danych, żeby nie zajmować wątku głównego (UI)
-    fun loadData() = thread {
+    private fun loadData() = thread {
         val tasks = db.tasks.getAll().map { entity -> // mapowanie encji na obiekt
             Task(
                 entity.id,
@@ -108,27 +110,28 @@ class ListFragment : Fragment() {
         }
     }
 
-    fun countTasks() {
+    private fun countTasks() {
         binding.counterText.text = adapter?.itemCount.toString()
     }
 
-    fun removeItemNow() {
-        binding.list.let {
-            // it. oznacza tu indeks elementu na liście
-            it.adapter = adapter // podpięcie adaptera do ListFragment
-            it.layoutManager =
-                LinearLayoutManager(requireContext()) // ustalenie layoutu dla dodawania elementów
-
-            // sprawdzenie, czy istnieje item do usunięcia
-            adapter?.removeItem(it.getChildLayoutPosition(it))?.let { // TODO find this task's proper id
-                // oddzielny wątek na usunięcie z bazy
-                thread {
-                    db.tasks.remove(it.id) // usunięcie z bazy // TODO find this task's proper id
-                    countTasks()
-                }
+    private fun setListeners() {
+        adapter = TasksAdapter().apply {
+            onItemClick = {
+                (activity as? Navigable)?.navigate(Navigable.Destination.Details, it)
             }
+            onItemLongClick = {
+                RemoveFragment(this@ListFragment).show(
+                    requireActivity().supportFragmentManager,
+                    null
+                )
+            }
+        }
 
-
+        binding.buttonAdd.setOnClickListener {
+            // "?" to sprawdzanie czy dane activity implementuje interfejs Navigable:
+            //      jeśli tak, to użyte zostaje navigate()
+            //      jeśli nie, to null
+            (activity as? Navigable)?.navigate(Navigable.Destination.Add)
         }
     }
 

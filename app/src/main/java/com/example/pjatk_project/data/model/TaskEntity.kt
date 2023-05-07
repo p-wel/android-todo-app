@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 data class TaskEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Long = 0,
-    val name: String,
-    val description: String,
-    val icon: String // iconId mogłoby się zmienić w trakcie kompilacji, więc używam nazwy icon
+    var name: String,
+    var description: String,
+    var icon: String // iconId mogłoby się zmienić w trakcie kompilacji, więc używam nazwy icon
 )

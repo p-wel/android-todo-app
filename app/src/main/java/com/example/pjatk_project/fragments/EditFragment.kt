@@ -25,9 +25,7 @@ class EditFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        // dostęp do bazy
-        db = TaskDatabase.open(requireContext())
+        db = TaskDatabase.open(requireContext()) // dostęp do bazy
     }
 
     override fun onCreateView(
@@ -41,37 +39,44 @@ class EditFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         adapter = TaskImagesAdapter()
+        val viewId = getViewId()
 
-        // pobranie id widoku
-        val id = requireArguments().getLong(
-            ARG_EDIT_ID, // [edycja]
-            -1 // [dodawanie]
-        )
-
-        if (id != -1L) {
+        if (viewId != -1L) {
             // [edycja]
-            thread { //dostęp do bazy w oddzielnym wątku (nie można blokować głównego wątku UI!)
-                task = db.tasks.getTask(id) // pobranie odpowiedniej encji z bazy
+            putDataIntoFragment(viewId)
+        }
+        // [edycja/dodawanie]
+        putImagesIntoFragment()
+        setListeners()
+    }
 
-                // przypisanie danych w innym wątku - na głównym wątku UI
-                requireActivity().runOnUiThread {
-                    // wypisanie danych aktualnego elementu w formularzu edycji (lub brak, jeśli używa się dodawania)
-                    binding.taskName.setText(task?.name ?: "")
-                    binding.description.setText(task?.description ?: "")
+    private fun setListeners() {
+        binding.buttonSave.setOnClickListener {
+            val task = task?.copy( // jeśli istnieje obiekt, to stwórz jego kopię
+                // [edycja]
+                name = binding.taskName.text.toString(),
+                description = binding.description.text.toString(),
+                icon = resources.getResourceEntryName(adapter.selectedIdRes)
 
-                    // ustawienie selecta na odpowiedniej ikonie [edycja]
-                    adapter.setSelection(
-                        task?.icon.let { //let{} żeby nie przekazać tu przypadkiem nulla
-                            resources.getIdentifier(it, "drawable", requireContext().packageName)
-                        }
-                    )
-                }
+            ) ?: TaskEntity( // jeśli nie istnieje obiekt, to dodaj nowy
+                // [dodawanie]
+                name = binding.taskName.text.toString(),
+                description = binding.description.text.toString(),
+                icon = resources.getResourceEntryName(adapter.selectedIdRes) // pobranie ikony z aktualnego elementu
+            )
+            // przypisanie zaktualizowanego elementu (do ew. późniejszego użytku)
+            this.task = task
+
+            // osobny wątek na dodanie nowego obiektu do bazy
+            thread {
+                db.tasks.addTask(task) // dodanie nowego obiektu do bazy
+                parentFragmentManager.popBackStack()
             }
         }
+    }
 
-        // użycie metod na RecyclerView images
+    private fun putImagesIntoFragment() {
         binding.images.apply {
             // wewnątrz "apply{}":
             //      - this jest obiektem RecyclerView
@@ -79,27 +84,31 @@ class EditFragment : Fragment() {
             adapter = this@EditFragment.adapter
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         }
+    }
 
-        // save wykonujący edycję/dodawanie elementów
-        binding.save.setOnClickListener {
-            val task = task?.copy( // jeśli istnieje obiekt, to stwórz jego kopię
-                // [edycja]
-                name = binding.taskName.text.toString(),
-                description = binding.description.text.toString(),
-                icon = resources.getResourceEntryName(adapter.selectedIdRes) // pobranie ikony z aktualnego elementu
-            ) ?: TaskEntity( // jeśli nie istnieje obiekt, to dodaj nowy
-                // [dodawanie]
-                name = binding.taskName.text.toString(),
-                description = binding.description.text.toString(),
-                icon = resources.getResourceEntryName(adapter.selectedIdRes) // pobranie ikony z aktualnego elementu
-            )
-            this.task =
-                task // dla pewności, przypisanie zaktualizowanego elementu (do ew. późniejszego użytku)
+    private fun getViewId(): Long {
+        return requireArguments().getLong(
+            ARG_EDIT_ID, // [edycja]
+            -1 // [default]
+        )
+    }
 
-            // osobny wątek na dodanie nowego obiektu
-            thread {
-                db.tasks.addTask(task) // dodanie nowego obiektu do bazy
-                parentFragmentManager.popBackStack()
+    private fun putDataIntoFragment(viewId: Long) {
+        thread { //dostęp do bazy w oddzielnym wątku (nie można blokować głównego wątku UI!)
+            task = db.tasks.getTask(viewId) // pobranie odpowiedniej encji z bazy
+
+            // przypisanie danych w innym wątku - na głównym wątku UI
+            requireActivity().runOnUiThread {
+                // wypisanie danych aktualnego elementu w formularzu edycji (lub brak, jeśli używa się dodawania)
+                binding.taskName.setText(task?.name ?: "")
+                binding.description.setText(task?.description ?: "")
+
+                // ustawienie selecta na odpowiedniej ikonie [edycja]
+                adapter.setSelection(
+                    task?.icon.let { //let{} żeby nie przekazać tu przypadkiem nulla
+                        resources.getIdentifier(it, "drawable", requireContext().packageName)
+                    }
+                )
             }
         }
     }

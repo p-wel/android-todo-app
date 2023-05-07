@@ -13,7 +13,7 @@ interface TaskDao {
     fun getTask(id: Long): TaskEntity
 
     // ustawienie OnConflictStrategy
-    // taki konflikt powstanie, bo użyty jest ten sam formularz do Insert/Update
+    // taki konflikt powstanie, bo użyty jest ten sam formularz do Dodaj/Edytuj
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun addTask(newTask: TaskEntity)
 
