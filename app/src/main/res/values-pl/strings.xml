@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Best TODO App</string>
+    <string name="counter">Licznik</string>
+    <string name="number">Liczba</string>
+    <string name="task_description">Opis zadania</string>
+    <string name="task_name">Nazwa zadania</string>
+    <string name="name">Nazwa</string>
+    <string name="description">Opis</string>
+    <string name="save_button">Przycisk zapisu</string>
+    <string name="number_of_tasks">Liczba zadań:</string>
+    <string name="add_button">Przycisk dodawania</string>
+    <string name="edit_button">Przycisk edycji</string>
+    <string name="share_button">Przycisk udostępniania</string>
+</resources>

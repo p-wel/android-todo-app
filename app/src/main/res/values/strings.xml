@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Best TODO App</string>
+    <string name="app_name" translatable="false">Best TODO App</string>
     <string name="counter">Counter</string>
     <string name="number">Number</string>
     <string name="task_description">Task description</string>
@@ -9,4 +9,6 @@
     <string name="save_button">Save button</string>
     <string name="number_of_tasks">Number of tasks:</string>
     <string name="add_button">Add button</string>
+    <string name="edit_button">Edit button</string>
+    <string name="share_button">Share button</string>
 </resources>
