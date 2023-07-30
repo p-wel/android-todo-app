@@ -1,6 +1,6 @@
 <h3 align="center">"android-todo-app"</h3>
 
-<h4 align="center">This is todo-list mobile app for Android practice.</h4>
+<h4 align="center">This is todo-list mobile app for Kotlin and Android practice.</h4>
 
 ---
 <div align="center">
