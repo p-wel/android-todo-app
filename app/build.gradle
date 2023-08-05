@@ -7,11 +7,11 @@ plugins {
 }
 
 android {
-    namespace 'com.example.pjatk_project'
+    namespace 'com.example.android_app'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.example.pjatk_project"
+        applicationId "com.example.android_app"
         minSdk 26
         targetSdk 33
         versionCode 1

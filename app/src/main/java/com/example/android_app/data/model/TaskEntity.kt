@@ -1,4 +1,4 @@
-package com.example.pjatk_project.data.model
+package com.example.android_app.data.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

@@ -1,4 +1,4 @@
-package com.example.pjatk_project
+package com.example.android_app
 
 import org.junit.Test
 

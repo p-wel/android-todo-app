@@ -1,10 +1,10 @@
-package com.example.pjatk_project.adapters
+package com.example.android_app.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.pjatk_project.R
-import com.example.pjatk_project.databinding.TaskImageBinding
+import com.example.android_app.R
+import com.example.android_app.databinding.TaskImageBinding
 
 
 // adapter łączący widok z danymi

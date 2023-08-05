@@ -1,10 +1,10 @@
-package com.example.pjatk_project.data
+package com.example.android_app.data
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.pjatk_project.data.model.TaskEntity
+import com.example.android_app.data.model.TaskEntity
 
 // klasa odpowiadająca za instancję bazy danych
 @Database(

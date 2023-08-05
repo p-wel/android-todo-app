@@ -1,7 +1,7 @@
-package com.example.pjatk_project.data
+package com.example.android_app.data
 
 import androidx.room.*
-import com.example.pjatk_project.data.model.TaskEntity
+import com.example.android_app.data.model.TaskEntity
 
 // interfejs dla dostępu do danych i ich edycji
 @Dao

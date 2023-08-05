@@ -1,4 +1,4 @@
-package com.example.pjatk_project.fragments
+package com.example.android_app.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,13 +8,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import com.example.pjatk_project.Navigable
-import com.example.pjatk_project.adapters.TasksAdapter
-import com.example.pjatk_project.adapters.SwipeToRemove
-import com.example.pjatk_project.data.TaskDatabase
-import com.example.pjatk_project.databinding.FragmentListBinding
-import com.example.pjatk_project.model.Task
+import com.example.android_app.Navigable
+import com.example.android_app.adapters.TasksAdapter
+import com.example.android_app.adapters.SwipeToRemove
+import com.example.android_app.data.TaskDatabase
+import com.example.android_app.databinding.FragmentListBinding
+import com.example.android_app.model.Task
 import kotlin.concurrent.thread
 
 class ListFragment : Fragment() {

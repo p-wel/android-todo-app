@@ -1,8 +1,8 @@
-package com.example.pjatk_project.adapters
+package com.example.android_app.adapters
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import com.example.pjatk_project.databinding.TaskImageBinding
+import com.example.android_app.databinding.TaskImageBinding
 
 // holder na obrazki
 class TaskImageViewHolder(private val binding: TaskImageBinding) : RecyclerView.ViewHolder(binding.root) {

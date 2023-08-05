@@ -1,7 +1,7 @@
-package com.example.pjatk_project
+package com.example.android_app
 
 import androidx.recyclerview.widget.DiffUtil
-import com.example.pjatk_project.model.Task
+import com.example.android_app.model.Task
 
 // callback - usprawni animację przy pracy z danymi na widoku (zmiany bez "mignięcia")
 class TaskCallback(val notSorted: List<Task>, val sorted: List<Task>) : DiffUtil.Callback() {

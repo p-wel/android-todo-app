@@ -1,4 +1,4 @@
-package com.example.pjatk_project
+package com.example.android_app
 
 interface Navigable {
     enum class Destination {

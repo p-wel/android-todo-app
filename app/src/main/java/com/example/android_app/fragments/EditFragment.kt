@@ -1,4 +1,4 @@
-package com.example.pjatk_project.fragments
+package com.example.android_app.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -6,10 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.pjatk_project.adapters.TaskImagesAdapter
-import com.example.pjatk_project.data.TaskDatabase
-import com.example.pjatk_project.data.model.TaskEntity
-import com.example.pjatk_project.databinding.FragmentEditBinding
+import com.example.android_app.adapters.TaskImagesAdapter
+import com.example.android_app.data.TaskDatabase
+import com.example.android_app.data.model.TaskEntity
+import com.example.android_app.databinding.FragmentEditBinding
 import kotlin.concurrent.thread
 
 // id tego fragmentu (przydatne przy przekazywaniu argumentów podczas nawigacji)

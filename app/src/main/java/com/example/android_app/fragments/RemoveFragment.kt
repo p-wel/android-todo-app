@@ -1,4 +1,4 @@
-package com.example.pjatk_project.fragments
+package com.example.android_app.fragments
 
 import android.app.Dialog
 import android.content.DialogInterface

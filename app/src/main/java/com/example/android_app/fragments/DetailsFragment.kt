@@ -1,4 +1,4 @@
-package com.example.pjatk_project.fragments
+package com.example.android_app.fragments
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,11 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.pjatk_project.Navigable
-import com.example.pjatk_project.adapters.TaskImagesAdapter
-import com.example.pjatk_project.data.TaskDatabase
-import com.example.pjatk_project.data.model.TaskEntity
-import com.example.pjatk_project.databinding.FragmentDetailsBinding
+import com.example.android_app.Navigable
+import com.example.android_app.adapters.TaskImagesAdapter
+import com.example.android_app.data.TaskDatabase
+import com.example.android_app.data.model.TaskEntity
+import com.example.android_app.databinding.FragmentDetailsBinding
 import kotlin.concurrent.thread
 
 const val ARG_DETAILS_ID = "details_id"

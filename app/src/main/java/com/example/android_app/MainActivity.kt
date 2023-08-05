@@ -1,19 +1,19 @@
-package com.example.pjatk_project
+package com.example.android_app
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentTransaction
-import com.example.pjatk_project.Navigable.Destination.Add
-import com.example.pjatk_project.Navigable.Destination.Details
-import com.example.pjatk_project.Navigable.Destination.Edit
-import com.example.pjatk_project.Navigable.Destination.List
-import com.example.pjatk_project.databinding.ActivityMainBinding
-import com.example.pjatk_project.fragments.ARG_ADD_ID
-import com.example.pjatk_project.fragments.ARG_DETAILS_ID
-import com.example.pjatk_project.fragments.ARG_EDIT_ID
-import com.example.pjatk_project.fragments.DetailsFragment
-import com.example.pjatk_project.fragments.EditFragment
-import com.example.pjatk_project.fragments.ListFragment
+import com.example.android_app.Navigable.Destination.Add
+import com.example.android_app.Navigable.Destination.Details
+import com.example.android_app.Navigable.Destination.Edit
+import com.example.android_app.Navigable.Destination.List
+import com.example.android_app.databinding.ActivityMainBinding
+import com.example.android_app.fragments.ARG_ADD_ID
+import com.example.android_app.fragments.ARG_DETAILS_ID
+import com.example.android_app.fragments.ARG_EDIT_ID
+import com.example.android_app.fragments.DetailsFragment
+import com.example.android_app.fragments.EditFragment
+import com.example.android_app.fragments.ListFragment
 
 class MainActivity : AppCompatActivity(), Navigable {
 

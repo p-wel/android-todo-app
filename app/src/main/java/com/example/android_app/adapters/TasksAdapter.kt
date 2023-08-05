@@ -1,13 +1,13 @@
-package com.example.pjatk_project.adapters
+package com.example.android_app.adapters
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.pjatk_project.TaskCallback
-import com.example.pjatk_project.databinding.ListItemBinding
-import com.example.pjatk_project.model.Task
+import com.example.android_app.TaskCallback
+import com.example.android_app.databinding.ListItemBinding
+import com.example.android_app.model.Task
 
 // adapter łączący widok z danymi
 class TasksAdapter : RecyclerView.Adapter<TaskViewHolder>() {
