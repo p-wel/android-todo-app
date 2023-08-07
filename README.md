@@ -12,20 +12,19 @@
 
 ---
 <h4 align="center">Screenshoots</h4>
-
 <div align="center"> 
   <h5>Splash screen</h5>
-  <img src="https://github.com/p-wel/android-todo-app/assets/75095360/2fbc5c59-cd12-4111-8117-ac4a4abd4755" alt="screen0" width="250" height="550"/>
+  <img src="https://github.com/p-wel/android-todo-app/assets/75095360/8e11a590-c7b1-4f81-ade2-6ddeb8d5bec6" alt="screen0" width="250" height="550"/>
   <br>
   <h5>Task list</h5>
-  <img src="https://github.com/p-wel/android-todo-app/assets/75095360/d69f581a-0a41-448d-b4a1-3d3969a75d17" alt="screen1" width="250" height="550"/>
+  <img src="https://github.com/p-wel/android-todo-app/assets/75095360/365a38b5-a80a-4d58-8f81-ab95b894fccf" alt="screen1" width="250" height="550"/>
   <br>
   <h5>Hold or Swipe to remove</h5>
-  <img src="https://github.com/p-wel/android-todo-app/assets/75095360/19ba89cd-90e9-4575-9f90-0a141f94b05c" alt="screen6" width="250" height="550"/>
-  <img src="https://github.com/p-wel/android-todo-app/assets/75095360/5efd4448-162a-40cd-9e68-72b6f711f3d9" alt="screen5" width="250" height="550"/>
+  <img src="https://github.com/p-wel/android-todo-app/assets/75095360/ba418579-15c7-4de4-bd4b-a09919ef90bb" alt="screen6" width="250" height="550"/> &nbsp;
+  <img src="https://github.com/p-wel/android-todo-app/assets/75095360/9273ce8d-fa33-4f78-9aad-ab43755c730b" alt="screen5" width="250" height="550"/>
   <br>
   <h5>Task form (new/details/edit)</h5>
-  <img src="https://github.com/p-wel/android-todo-app/assets/75095360/6b87661c-c08f-4558-9421-9b5883fdf192" alt="screen8" width="250" height="550"/>
-  <img src="https://github.com/p-wel/android-todo-app/assets/75095360/1f4d294e-618e-4818-bada-0653a3ceadec" alt="screen2" width="250" height="550"/>
-  <img src="https://github.com/p-wel/android-todo-app/assets/75095360/08eb029b-d727-40e4-8d6b-faca69a0e180" alt="screen4" width="250" height="550"/>
+  <img src="https://github.com/p-wel/android-todo-app/assets/75095360/28eaeaef-6afc-48fa-b605-998d5dbf2203" alt="screen8" width="250" height="550"/> &nbsp; &nbsp;
+  <img src="https://github.com/p-wel/android-todo-app/assets/75095360/a137826d-2f41-4820-9ca5-a3db2d16e3a5" alt="screen2" width="250" height="550"/> &nbsp; &nbsp;
+  <img src="https://github.com/p-wel/android-todo-app/assets/75095360/1173c283-92dd-4032-b222-65f3d57103ff" alt="screen4" width="250" height="550"/>
 </div>
